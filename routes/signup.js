@@ -15,7 +15,14 @@ var router = express.Router();
 var app = express();
 
 router.get('/', function(req, res, next) {
-  res.render('signup', { title: 'Signup' });
+        if (req.isAuthenticated()) {
+          res.redirect('/account');
+          }
+          else{
+            res.render('signup', { title: 'Signup' });
+          }
+
+
 });
 
 router.post('/',  async function (req, res, next) {
