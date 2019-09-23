@@ -4,7 +4,14 @@ var cookieParser = require('cookie-parser');
 var createError = require('http-errors');
 var path = require('path');
 var logger = require('morgan');
+var flash = require('connect-flash');
+var passport = require("passport");
+var request = require('request');
+var session = require("express-session");
 const PORT = process.env.PORT || 5000
+
+
+
 
 /* --- V7: Using dotenv     --- */
 require('dotenv').config();
@@ -32,6 +39,10 @@ var formsRouter = require('./routes/forms');
 /* --- V6: Modify Database  --- */
 var insertRouter = require('./routes/insert');
 /* ---------------------------- */
+
+/* --- login --- */
+var loginRouter = require('./routes/login');
+var signupRouter = require('./routes/signup');
 
 var app = express();
 
@@ -71,6 +82,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/insert', insertRouter);
 /* ---------------------------- */
+
+/* --- login --- */
+const expressSession = require('express-session');
+app.use(expressSession({secret: 'mySecretKey'})); //TODO change this
+app.use(passport.initialize());
+app.use(passport.session());
+app.use('/public', express.static(__dirname + '/public'));
+app.use(flash());
+app.use(session({secret: 'keyboard cat'})) //TODO change this
+app.use(bodyParser());
+app.use('/login', loginRouter);
+app.use('/signup', signupRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
