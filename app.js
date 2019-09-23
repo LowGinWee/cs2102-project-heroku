@@ -43,6 +43,7 @@ var insertRouter = require('./routes/insert');
 /* --- login --- */
 var loginRouter = require('./routes/login');
 var signupRouter = require('./routes/signup');
+var accountRouter = require('./routes/account');
 
 var app = express();
 
@@ -90,10 +91,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/public', express.static(__dirname + '/public'));
 app.use(flash());
-app.use(session({secret: 'keyboard cat'})) //TODO change this
-app.use(bodyParser());
+//app.use(session({secret: 'keyboard cat'})) //TODO change this
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
+app.use('/account', accountRouter);
 
 
 // catch 404 and forward to error handler
