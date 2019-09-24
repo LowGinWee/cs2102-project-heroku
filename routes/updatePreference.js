@@ -20,8 +20,7 @@ router.get('/',async function(req, res, next) {
             if(err) {
                 console.log(err);
             }
-            if (data != null) {
-                console.log(data.rows[0].cuisinetype);
+            if (data.rows[0] != null) {
                 res.render('updatePreference', { title: 'Update Preferences', userData: data.rows});       
             } else {
                 var emptyData = [{ cuisinetype:"", preftime:0, location:"", budget:0}];
