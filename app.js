@@ -44,6 +44,7 @@ var insertRouter = require('./routes/insert');
 var loginRouter = require('./routes/login');
 var signupRouter = require('./routes/signup');
 var accountRouter = require('./routes/account');
+var logoutRouter = require('./routes/logout');
 
 /* --- preferences --- */
 var updatePreferenceRouter = require('./routes/updatePreference');
@@ -99,6 +100,7 @@ app.use(flash());
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/account', accountRouter);
+app.use('/logout', logoutRouter);
 
 /* --- Preferences --- */
 app.use('/updatePreference', updatePreferenceRouter);
