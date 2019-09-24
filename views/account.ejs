@@ -14,7 +14,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   </head>
   <body>
-    <h1>Welcome <%= userData[0].username%></h1>
+    <h1>Welcome <%= username%></h1>
     <p>User Details</p>
 
     <table class="table">
@@ -27,13 +27,32 @@
         </thead>
         <tbody>
           <tr>
-            <td><%= userData[0].username%></td>
+            <td><%= username%></td>
             <td><%= userData[0].email%></td>
             <td><%= userData[0].awardpoints%></td>
           </tr>
         </tbody>
       </table>
-				
+
+      <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Favourite Cuisine</th>
+              <th scope="col">Time of Meals</th>
+              <th scope="col">Favourite Location</th>
+              <th scope="col">Budget</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= userData[0].cuisinetype%></td>
+              <td><%= userData[0].preftime%></td>
+              <td><%= userData[0].location%></td>
+              <td>$<%= userData[0].budget%></td>
+            </tr>
+          </tbody>
+        </table>
+				<a href="/updatepreference">update preferences</a><br/>
 	<a href="/">home</a><br/>
 	
   </body>

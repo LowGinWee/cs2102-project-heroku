@@ -19,23 +19,24 @@
 			<thead>
 				<tr>
 					<th scope="col">Usernames</th>
-					<th scope="col">Emails</th>
-					<th scope="col">Passwords</th>
-					<th scope="col">Award Points</th>
+					<th scope="col">Favourite Cuisine</th>
+					<th scope="col">Time of Meals</th>
+                    <th scope="col">Favourite Location</th>
+                    <th scope="col">Budget</th>
 				</tr>
 			</thead>
 			<tbody>
-				<% for(var i=0; i<data.length; i++) { %>
+				<% for(var i=0; i<userData.length; i++) { %>
 				<tr>
-					<td><%= data[i].username%></td>
-					<td><%= data[i].email%></td>
-					<td><%= data[i].password%></td>
-					<td><%= data[i].awardpoints%></td>
+                        <td><%= userData[0].username%></td>
+                        <td><%= userData[0].cuisinetype%></td>
+                        <td><%= userData[0].preftime%></td>
+                        <td><%= userData[0].location%></td>
+                        <td>$<%= userData[0].budget%></td>
 				</tr>
 				<% } %>
 			</tbody>
-		</table>
-		<a href="/selectProfiles">Profiles</a><br/>
+        </table>
+        <a href="/select">Accounts</a><br/>
   </body>
-
 </html>

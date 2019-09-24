@@ -45,6 +45,10 @@ var loginRouter = require('./routes/login');
 var signupRouter = require('./routes/signup');
 var accountRouter = require('./routes/account');
 
+/* --- preferences --- */
+var updatePreferenceRouter = require('./routes/updatePreference');
+var selectProfilesRouter = require('./routes/selectProfiles');
+
 var app = express();
 
 // view engine setup
@@ -95,6 +99,10 @@ app.use(flash());
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/account', accountRouter);
+
+/* --- Preferences --- */
+app.use('/updatePreference', updatePreferenceRouter);
+app.use('/selectProfiles', selectProfilesRouter);
 
 
 // catch 404 and forward to error handler

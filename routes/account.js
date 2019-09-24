@@ -8,16 +8,18 @@ const pool = new Pool({
   ssl: true
 });
 
-var sql_query = 'SELECT * FROM userAccount';
+
 
 router.get('/', async function(req, res, next) {
+    var sql_query = "SELECT * FROM userAccount u LEFT OUTER JOIN preferences p ON (u.username = p.username) WHERE u.username = '";
     if(req.isAuthenticated()){
         await (req.user)
-        sql_query = sql_query + " WHERE username ='" + req.user.username + "'";
+        var username = req.user.username
+        sql_query = sql_query + req.user.username + "'";
         console.log(sql_query);
         pool.query(sql_query, (err, data) => {
-            console.log(data.rows[0].awardpoints);
-            res.render('account', { title: 'Account', userData: data.rows});
+            console.log(data.rows[0].preftime);
+            res.render('account', { title: 'Account', username: username, userData: data.rows});
         });
         
     } else {
