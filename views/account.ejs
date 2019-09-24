@@ -14,8 +14,26 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   </head>
   <body>
-    <h1>Welcome <%= userData%> Page</h1>
-    <p>Welcome to CS2102 <%= userData%> Page</p>
+    <h1>Welcome <%= userData[0].username%> Page</h1>
+    <p>Welcome to CS2102 <%= userData[0].username%> Page</p>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Award Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= userData[0].username%></td>
+            <td><%= userData[0].email%></td>
+            <td><%= userData[0].awardpoints%></td>
+          </tr>
+        </tbody>
+      </table>
+				
 	<a href="/">home</a><br/>
 	
   </body>

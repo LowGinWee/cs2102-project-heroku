@@ -27,26 +27,32 @@ router.get('/', function(req, res, next) {
 
 router.post('/',  async function (req, res, next) {
     try{
+        
         const client = await pool.connect()
         await client.query('BEGIN')
         var pwd = await bcrypt.hash(req.body.password, 5);
-        await JSON.stringify(client.query('SELECT id FROM "users" WHERE "email"=$1', [req.body.username], function(err, result) {
+        
+        //var pwd = req.body.password;
+        var sqlQuery = "SELECT * FROM userAccount WHERE email ='" + req.body.email + "' OR username ='" + req.body.username + "'";
+        console.log(sqlQuery);
+        await (client.query(sqlQuery, function(err, result) {
             if(result.rows[0]){
-            req.flash('warning', "This email address is already registered. <a href='/login'>Log in!</a>");
-            res.redirect('/signup');
+                req.flash('warning', "This email address or username is already registered. <a href='/login'>Log in!</a>");
+                res.redirect('/signup');
             } else{
-            client.query('INSERT INTO users (id, "firstName", "lastName", email, password) VALUES ($1, $2, $3, $4, $5)', [uuidv4(), req.body.firstName, req.body.lastName, req.body.username, pwd], function(err, result) {
-            if(err){
-            console.log(err);
-        } else {
-            client.query('COMMIT')
-            console.log(result)
-            req.flash('success','User created.')
-            res.redirect('/login');
-        return;
-        }
-        });        
-        }
+                var insertQuery = "INSERT INTO userAccount (username, email, password) VALUES" + "('" + req.body.username + "','" + req.body.email + "'," + pwd + ")";
+                client.query(insertQuery, function(err, result) {
+                    if(err){
+                        console.log(err);
+                    } else {
+                        client.query('COMMIT')
+                        console.log(result)
+                        req.flash('success','User created.')
+                        res.redirect('/login');
+                        return;
+                    }
+                });        
+            }
         }));
         client.release();
     } 
