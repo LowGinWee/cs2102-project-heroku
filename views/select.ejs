@@ -18,41 +18,22 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th scope="col">Matric</th>
-					<th scope="col">Name</th>
-					<th scope="col">Faculty</th>
+					<th scope="col">Usernames</th>
+					<th scope="col">Emails</th>
+					<th scope="col">Passwords</th>
+					<th scope="col">Award Points</th>
 				</tr>
 			</thead>
 			<tbody>
 				<% for(var i=0; i<data.length; i++) { %>
 				<tr>
-					<td><%= data[i].matric%></td>
-					<td><%= data[i].name%></td>
-					<td><%= data[i].faculty%></td>
+					<td><%= data[i].username%></td>
+					<td><%= data[i].email%></td>
+					<td><%= data[i].password%></td>
+					<td><%= data[i].awardpoints%></td>
 				</tr>
 				<% } %>
 			</tbody>
 		</table>
-		<h3>CODE:</h3>
-		<code class="language-html" data-lang="html">
-		&lt;table class="table"&gt;<br />
-		&nbsp; &nbsp; &nbsp;&lt;thead&gt;<br />
-		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&lt;tr&gt;<br />
-		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&lt;th scope="col"&gt;Matric&lt;/th&gt;<br />
-		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&lt;th scope="col"&gt;Name&lt;/th&gt;<br />
-		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&lt;th scope="col"&gt;Faculty&lt;/th&gt;<br />
-		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&lt;/tr&gt;<br />
-		&nbsp; &nbsp; &nbsp;&lt;/thead&gt;<br />
-		&nbsp; &nbsp; &nbsp;&lt;tbody&gt;<br />
-		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&lt;% for(var i=0; i&lt;data.length; i++) { %&gt;<br />
-		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&lt;tr&gt;<br />
-		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&lt;td&gt;&lt;%= data[i].matric%&gt;&lt;/td&gt;<br />
-		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&lt;td&gt;&lt;%= data[i].name%&gt;&lt;/td&gt;<br />
-		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&lt;td&gt;&lt;%= data[i].faculty%&gt;&lt;/td&gt;<br />
-		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&lt;/tr&gt;<br />
-		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&lt;% } %&gt;<br />
-		&nbsp; &nbsp; &nbsp;&lt;/tbody&gt;<br />
-		&lt;/table&gt;
-		</code>
   </body>
 </html>
