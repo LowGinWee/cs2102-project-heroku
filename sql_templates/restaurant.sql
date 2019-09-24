@@ -1,5 +1,5 @@
-CREATE TABLE restaurant (
-	Name 			varchar(100) 	PRIMARY KEY,
+CREATE TABLE Restaurant (
+	RName 			varchar(100) 	PRIMARY KEY,
 	Location 		varchar(100) 	PRIMARY KEY,
 	CuisineType		varchar(30)		NOT NULL,
 	Rating			integer,
