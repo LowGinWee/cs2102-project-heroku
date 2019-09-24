@@ -11,7 +11,6 @@ const pool = new Pool({
 var sql_query = 'SELECT * FROM userAccount';
 
 router.get('/', async function(req, res, next) {
-    //res.render('account', { title: 'Account', userData: req.user});
     if(req.isAuthenticated()){
         await (req.user)
         sql_query = sql_query + " WHERE username ='" + req.user.username + "'";
