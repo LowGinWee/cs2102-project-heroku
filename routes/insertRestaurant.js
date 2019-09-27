@@ -25,7 +25,7 @@ router.post('/', function(req, res, next) {
     var open = req.body.open;
     var close = req.body.close;
 
-    var opening = open + "&nbsp;-&nbsp;" + close;
+    var opening = open + " - " + close;
 	
 	// Construct Specific SQL Query
 	var insert_query = sql_query + "('" + rname + "','" + location + "','" + cuisinetype + "','" + opening +"')";

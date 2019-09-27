@@ -2,7 +2,7 @@
 <html>
   <head>
 		<!-- Page Title -->
-    <title>CS2102 Select Restaurant</title>
+    <title>Restaurate</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 		
 		<!-- CSS for Styling -->
@@ -14,34 +14,32 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   </head>
   <body>
-    <h1>CS2102: <%= title%></h1>
-		<table class="table">
+    <h1><%= title%></h1>
+    <p><%= title%></p><br />
+    <table class="table">
 			<thead>
 				<tr>
-					<th scope="col">Restaurant</th>
 					<th scope="col">Location</th>
 					<th scope="col">Cuisine</th>
                     <th scope="col">Ratings</th>
 					<th scope="col">Opening Hours</th>
 					<th scope="col">Prices</th>
-					<th scope="col">Restaurant profile</th>
 				</tr>
 			</thead>
 			<tbody>
 				<% for(var i=0; i<userData.length; i++) { %>
 				<tr>
-                        <td><%= userData[i].rname%></td>
-						<td><%= userData[i].location%></td>
+                        <td><%= userData[i].location%></td>
                         <td><%= userData[i].cuisinetype%></td>
                         <td>To compute ratings</td>
 						<td><%= userData[i].openinghours%></td>
 						<td>$To Compute average price</td>
-						<td><a href= "<%= "/selectRestaurant/" +  userData[i].rname + "-" + userData[i].location%>"</a>link</a></td>
 				</tr>
 				<% } %>
 			</tbody>
         </table>
-		<a href="/select">Accounts</a><br/>
-		<a href="/insertRestaurant">Add a Restaurant</a><br/>
+		
+
+		<a href="/selectRestaurant">Restaurants</a><br/>
   </body>
 </html>
