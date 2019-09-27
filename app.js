@@ -50,6 +50,10 @@ var logoutRouter = require('./routes/logout');
 var updatePreferenceRouter = require('./routes/updatePreference');
 var selectProfilesRouter = require('./routes/selectProfiles');
 
+/* --- resturant --- */
+var insertRestaurantRouter = require('./routes/insertRestaurant');
+var selectRestaurantRouter = require('./routes/selectRestaurant');
+
 var app = express();
 
 // view engine setup
@@ -105,6 +109,10 @@ app.use('/logout', logoutRouter);
 /* --- Preferences --- */
 app.use('/updatePreference', updatePreferenceRouter);
 app.use('/selectProfiles', selectProfilesRouter);
+
+/* --- restaurant --- */
+app.use('/insertRestaurant', insertRestaurantRouter);
+app.use('/selectRestaurant', selectRestaurantRouter);
 
 
 // catch 404 and forward to error handler
