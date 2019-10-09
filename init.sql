@@ -1,7 +1,6 @@
 DROP TABLE IF EXISTS userAccount;
 DROP TABLE IF EXISTS preferences;
-
-
+DROP TABLE IF EXISTS Restaurant;
 
 CREATE TABLE userAccount (
     username VARCHAR(50) PRIMARY KEY,
@@ -17,4 +16,12 @@ CREATE TABLE preferences (
     location VARCHAR(50),
     budget INTEGER,
     FOREIGN KEY (username) REFERENCES userAccount (username) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Restaurant (
+	RName varchar(100),
+	Location varchar(100),
+	CuisineType varchar(30) NOT NULL,
+	OpeningHours varchar(20) NOT NULL,
+	primary key (rname, location)
 );
