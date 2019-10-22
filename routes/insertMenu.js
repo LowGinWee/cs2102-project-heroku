@@ -21,9 +21,15 @@ router.get('/', function(req, res, next) {
 }); */
 
 router.get('/:rname-:location', function(req, res, next) {
- 	var rname = req.params.rname;
-	var location = req.params.location;
-	res.render('insertMenu', { title: rname , location: location });
+	var rname = req.params.rname;
+   var location = req.params.location;
+   res.render('insertMenu', { title: rname , location: location });
+});
+
+router.get('/:rname-:location/delete', function(req, res, next) {
+	var rname = req.params.rname;
+   var location = req.params.location;
+   res.render('deleteMenu', { title: rname , location: location });
 });
 
 router.post('/:rname-:location', async function(req, res, next) {
@@ -63,6 +69,50 @@ squid-0.45
 death-0.00
 
 stuff-99
+	*/
+	// Construct Specific SQL Query
+	await pool.query(insert_query, (err, data) => {
+        if (err) {
+            console.log(err);
+		}
+		res.redirect('/selectRestaurant/' + rname + '-' + location);
+	});
+
+	
+});
+
+router.post('/:rname-:location/delete', async function(req, res, next) {
+	// Retrieve Information
+	var course  = req.body.course;
+	var rname = req.params.rname;
+	var location = req.params.location;
+	var a = req.body.food;
+	a = a.split("\r\n");
+
+	var fname;
+	var insert_query = "";
+
+	for (var i = 0; i < a.length; i++) {
+		insert_query += "DELETE FROM Menu WHERE fname = '"+ a[i] + "' AND  rname = '" + rname +"' AND location = '" + location + "';\n";
+	}
+	console.log(insert_query);
+/* test data
+chicken rice
+pizaa
+noodle
+love
+
+water
+coke
+leaf broth
+bean juice
+happiness
+
+salad
+pickles
+squid
+death
+
 	*/
 	// Construct Specific SQL Query
 	await pool.query(insert_query, (err, data) => {

@@ -2,7 +2,7 @@
 <html>
   <head>
 		<!-- Page Title -->
-    <title>Restaurate</title>
+    <title>CS2102 Add Restaurant</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 		
 		<!-- CSS for Styling -->
@@ -12,32 +12,29 @@
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+		<!-- ADDED JavaScript -->
+		<script src="javascripts/insertRestaurantScript.js"></script>
   </head>
   <body>
-    <h1><%= title%> @ <%= location%></h1>
-    <p><%= title%></p><br />
-	<table class="table">
-		<thead>
-			<tr>
-				<th scope="col">Course</th>
-				<th scope="col">Food</th>
-				<th scope="col">Price</th>
-			</tr>
-		</thead>
-		<tbody>
-			<% for(var i=0; i<menu.length; i++) { %>
-			<tr>
-					<td><%= menu[i].course%></td>
-					<td><%= menu[i].fname%></td>
-					<td><%= menu[i].price%></td>
-			</tr>
-			<% } %>
-		</tbody>
-	</table>
-
-
-		<a href= "<%= "/insertMenu/" + title  + "-" +  location + "/delete"%>">Delete from menu</a><br/>
-		<a href= "<%= "/insertMenu/" + title  + "-" +  location%>">Add to menu</a><br/>
-		<a href="/selectRestaurant">Restaurants</a><br/>
+    <h1>Delete from menu for: <%= title%> <%= location%></h1>
+		<form id="html_form" action="delete" role="form" method="post">
+			<div class="form-group">
+				<textarea rows = "20" cols = "50" class="form-control" id="food" name="food" placeholder="Enter foods to delete, EG: &#13;&#10;coke&#13;&#10;chicken rice&#13;&#10;happiness&#13;&#10;..."></textarea>
+			</div>
+			
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+		
+		<script>
+			(function() {
+				window.addEventListener('load', function() {
+					var forms = [document.getElementById('html_form')];
+					var validation = Array.prototype.filter.call(forms, function(form) {
+						form.addEventListener('submit', check, false);
+					});
+				}, false);
+			})();
+		</script>
   </body>
 </html>
