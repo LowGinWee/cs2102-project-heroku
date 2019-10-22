@@ -14,6 +14,10 @@ var express = require('express');
 var router = express.Router();
 var app = express();
 
+var alert = require('alert-node');
+ 
+
+
 router.get('/', function(req, res, next) {
         if (req.isAuthenticated()) {
           res.redirect('/account');
@@ -21,7 +25,7 @@ router.get('/', function(req, res, next) {
           else{
             res.render('signup', { title: 'Signup' });
           }
-
+          
 
 });
 
@@ -37,18 +41,24 @@ router.post('/',  async function (req, res, next) {
         console.log(sqlQuery);
         await (client.query(sqlQuery, function(err, result) {
             if(result.rows[0]){
-                //req.flash('warning', "This email address or username is already registered. <a href='/login'>Log in!</a>");
+                alert("This email address or username is already registered.");
                 res.redirect('/signup');
             } else{
-                var insertQuery = "INSERT INTO userAccount (username, email, password) VALUES" + "('" + req.body.username + "','" + req.body.email + "'," + pwd + ")";
+                var insertQuery = "INSERT INTO userAccount (username, email, password) VALUES" + "('" + req.body.username + "','" + req.body.email + "','" + pwd + "');\n";
+                if (req.body.manager == 'true'){
+                    insertQuery += "INSERT INTO manager (username, rname, location) values ('"  + req.body.username + "','" + req.body.rname + "','" + req.body.location + "');";
+                } else {
+                    insertQuery += "INSERT INTO customer (username) values ('" + req.body.username + "');";
+                }
                 console.log(insertQuery);
+
                 client.query(insertQuery, function(err, result) {
                     if(err){
                         console.log(err);
                     } else {
                         client.query('COMMIT')
                         console.log(result)
-                        //req.flash('success','User created.')
+
                         res.redirect('/login');
                         return;
                     }
