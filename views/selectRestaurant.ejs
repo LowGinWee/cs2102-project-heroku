@@ -25,6 +25,8 @@
 					<th scope="col">Opening Hours</th>
 					<th scope="col">Prices</th>
 					<th scope="col">Restaurant profile</th>
+					<th scope="col">Restaurant menu</th>
+					<th scope="col">Restaurant Insert Menu</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -37,6 +39,9 @@
 						<td><%= userData[i].openinghours%></td>
 						<td>$To Compute average price</td>
 						<td><a href= "<%= "/selectRestaurant/" +  userData[i].rname + "-" + userData[i].location%>"</a>link</a></td>
+						<td><a href= "<%= "/selectRestaurant/" +  userData[i].rname + "-" + userData[i].location%>/menu"</a>link</a></td>
+						<td><a href= "<%= "/insertMenu/" +  userData[i].rname + "-" + userData[i].location%>"</a>link</a></td>
+
 				</tr>
 				<% } %>
 			</tbody>

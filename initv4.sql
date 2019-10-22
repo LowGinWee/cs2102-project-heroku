@@ -150,9 +150,10 @@ CREATE TABLE Menu (
 	RName varchar(100),
 	Location varchar(100),
 	course varchar(30) NOT NULL,
-	price integer NOT NULL,
+	price numeric NOT NULL,
 	PRIMARY KEY (FName, RName, Location),
-	FOREIGN KEY (RName, Location) REFERENCES Restaurant (RName, Location) ON DELETE CASCADE ON UPDATE CASCADE -- legal? or must call separately
+	FOREIGN KEY (RName, Location) REFERENCES Restaurant (RName, Location) ON DELETE CASCADE ON UPDATE CASCADE, -- legal? or must call separately
+	CHECK(course <> '')
 );
 
 DROP TABLE IF EXISTS OfferMenu; -- Weak entity

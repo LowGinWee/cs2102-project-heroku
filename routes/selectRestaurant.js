@@ -20,20 +20,56 @@ router.get('/', function(req, res, next) {
 	});
 });
 
-router.get('/:rname-:location', function(req, res, next) {
+router.get('/:rname-:location', async function(req, res, next) {
 	var rname = req.params.rname;
 	var location = req.params.location;
 	var new_query = sql_query + " WHERE rname = '" + rname + "'" + " AND location = '" + location + "'";
 
-	pool.query(new_query, (err, data) => {
+	var data1;
+
+	await pool.query(new_query, (err, data) => {
 		if(err){
 			console.log(err);
-		} else if(data.rows.length != 0) {
-			res.render('viewRestaurant', { title: rname , userData: data.rows });
 		} else {
-			res.redirect("/selectRestaurant");
+			data1 = data;
+			console.log(data1);
+			res.render('viewRestaurant', { title: rname , userData: data1.rows})
 		}
 	});
+	
+/* 	var course_query = "SELECT DISTINCT * FROM menu" +  " WHERE rname = '" + rname + "'" + " AND location = '" + location + "' ORDER BY course";
+	var menu;
+	await pool.query(course_query, (err, data) => {
+		if(err){
+			console.log(err);
+		} else {
+			menu = data;
+			res.render('viewRestaurant', { title: rname , userData: data1.rows, menu: menu.rows})
+		}
+
+
+	}); */
+
+});
+
+router.get('/:rname-:location/menu', async function(req, res, next) {
+	var rname = req.params.rname;
+	var location = req.params.location;
+
+	
+	var course_query = "SELECT DISTINCT * FROM menu" +  " WHERE rname = '" + rname + "'" + " AND location = '" + location + "' ORDER BY course";
+	var menu;
+	await pool.query(course_query, (err, data) => {
+		if(err){
+			console.log(err);
+		} else {
+			menu = data;
+			res.render('viewRestaurantMenu', { title: rname , location: location, menu: menu.rows})
+		}
+
+
+	});
+
 });
 
 module.exports = router;

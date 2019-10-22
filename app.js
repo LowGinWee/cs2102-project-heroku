@@ -53,6 +53,8 @@ var selectProfilesRouter = require('./routes/selectProfiles');
 /* --- resturant --- */
 var insertRestaurantRouter = require('./routes/insertRestaurant');
 var selectRestaurantRouter = require('./routes/selectRestaurant');
+/* --- insert menu --- */
+var insertMenu = require('./routes/insertMenu');
 
 var app = express();
 
@@ -113,6 +115,8 @@ app.use('/selectProfiles', selectProfilesRouter);
 /* --- restaurant --- */
 app.use('/insertRestaurant', insertRestaurantRouter);
 app.use('/selectRestaurant', selectRestaurantRouter);
+
+app.use('/insertMenu', insertMenu);
 
 
 // catch 404 and forward to error handler
