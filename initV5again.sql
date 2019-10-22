@@ -47,7 +47,26 @@ to show write reviews maybe? Thoughts?
 */
 
 --Updated
+
+--Drops moved to the top. All using CASCADE to ensure full drop.
+--Drops failed without CASCADE since it was unable to drop tables that depend on another
 DROP TABLE IF EXISTS userAccount CASCADE;
+DROP TABLE IF EXISTS Customer CASCADE;
+DROP TABLE IF EXISTS Admin CASCADE;
+DROP TABLE IF EXISTS Friends CASCADE;
+DROP TABLE IF EXISTS preferences CASCADE;
+DROP TABLE IF EXISTS Restaurant CASCADE;
+DROP TABLE IF EXISTS RestaurantProfile CASCADE;
+DROP TABLE IF EXISTS Favourites CASCADE;
+DROP TABLE IF EXISTS Availability CASCADE;
+DROP TABLE IF EXISTS Reservation CASCADE;
+DROP TABLE IF EXISTS RateVisit CASCADE;
+DROP TABLE IF EXISTS Menu CASCADE;
+DROP TABLE IF EXISTS OfferMenu CASCADE;
+DROP TABLE IF EXISTS Rewards CASCADE;
+DROP TABLE IF EXISTS Claims CASCADE;
+
+
 CREATE TABLE userAccount (
 username VARCHAR(50) UNIQUE PRIMARY KEY, -- for login purposes unique
 email VARCHAR(355) UNIQUE NOT NULL,
@@ -55,28 +74,25 @@ password VARCHAR(50) NOT NULL,
 awardPoints INTEGER DEFAULT 0
 );
 
-DROP TABLE IF EXISTS Customer CASCADE;
 CREATE TABLE Customer (
 username VARCHAR(50) PRIMARY KEY REFERENCES UserAccount (username)
 );
 
-DROP TABLE IF EXISTS Admin CASCADE;
 CREATE TABLE Admin (
 username VARCHAR(50) PRIMARY KEY REFERENCES UserAccount (username)
 );
 
-DROP TABLE IF EXISTS Friends;
 CREATE TABLE Friends (
     myUsername VARCHAR(50), 
 	friendUsername VARCHAR(50), 
 	PRIMARY KEY(myUsername, friendUsername),
 	FOREIGN KEY(myUsername) REFERENCES Customer(username),
-	FOREIGN KEY(friendUsername) REFERENCES Customer(username)
+	FOREIGN KEY(friendUsername) REFERENCES Customer(username),
+	CHECK (myUsername <> friendUsername)
 );
 
 --Updated
-DROP TABLE IF EXISTS preferences; -- Weak entity
-CREATE TABLE preferences ( 
+CREATE TABLE preferences ( 		-- Weak entity
     username VARCHAR(50) PRIMARY KEY,
     prefCuisinetype VARCHAR(50),
     prefArea VARCHAR(50),
@@ -85,7 +101,6 @@ CREATE TABLE preferences (
 );
 
 --Updated maxTables
-DROP TABLE IF EXISTS Restaurant;
 CREATE TABLE Restaurant (
 	RName varchar(100),
 	branchID varchar(100),
@@ -95,7 +110,6 @@ CREATE TABLE Restaurant (
 	primary key (rname, branchID)
 );
 
-DROP TABLE IF EXISTS RestaurantProfile;
 CREATE TABLE RestaurantProfile (
 	RName varchar(100),
 	branchID varchar(100),
@@ -105,7 +119,6 @@ CREATE TABLE RestaurantProfile (
 	FOREIGN KEY (RName, branchID) REFERENCES Restaurant (RName, branchID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-DROP TABLE IF EXISTS Favourites;
 CREATE TABLE Favourites (
 	username varchar(50),
 	RName varchar(100),
@@ -115,7 +128,6 @@ CREATE TABLE Favourites (
 	FOREIGN KEY (RName, branchID) REFERENCES Restaurant (RName, branchID)
 );
 
-DROP TABLE IF EXISTS Availability;
 CREATE TABLE Availability (
 	RName varchar(100),
 	branchID varchar(100),
@@ -126,7 +138,6 @@ CREATE TABLE Availability (
 	FOREIGN KEY (RName, branchID) REFERENCES Restaurant (RName, branchID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-DROP TABLE IF EXISTS Reservation;
 CREATE TABLE Reservation (
 	username varchar(50),
 	RName varchar(100),
@@ -140,54 +151,48 @@ CREATE TABLE Reservation (
 	FOREIGN KEY (RName, branchID, reserveDate, reserveTime) REFERENCES Availability (RName, branchID, reserveDate, reserveTime)
 );
 
-DROP TABLE IF EXISTS RateVisit;
 CREATE TABLE RateVisit (
 	username varchar(50),
 	RName varchar(100),
 	branchID varchar(100),
 	reserveDate date NOT NULL,
 	reserveTime time NOT NULL,
-	rating numeric(1,1),
+	rating integer,
 	PRIMARY KEY (username, RName, branchID, reserveDate, reserveTime),
 	FOREIGN KEY (username, RName, branchID, reserveDate, reserveTime) REFERENCES Reservation(username, RName, branchID, reserveDate, reserveTime),
 	CHECK(rating <= 5 AND rating >=0)
 );
 
-DROP TABLE IF EXISTS Menu; -- Weak entity
-CREATE TABLE Menu (
+CREATE TABLE Menu (		 -- Weak entity
 	FName varchar(50),
 	RName varchar(100),
 	branchID varchar(100),
 	course varchar(30) NOT NULL,
-	price numeric NOT NULL,
+	price numeric(4,2) NOT NULL,
 	PRIMARY KEY (FName, RName, branchID),
 	FOREIGN KEY (RName, branchID) REFERENCES Restaurant (RName, branchID) ON DELETE CASCADE ON UPDATE CASCADE, -- legal? or must call separately
 	CHECK(course <> '')
 );
 
-DROP TABLE IF EXISTS OfferMenu; -- Weak entity
-CREATE TABLE OfferMenu (
+CREATE TABLE OfferMenu (		 -- Weak entity
 	OName varchar(50),
 	RName varchar(100),
 	branchID varchar(100),
 	course varchar(30) NOT NULL,
-	price integer NOT NULL,
+	price numeric(4,2) NOT NULL,
 	startDate date NOT NULL,
 	endDate date NOT NULL,
 	PRIMARY KEY (OName, RName, branchID),
 	FOREIGN KEY (RName, branchID) REFERENCES Restaurant (RName, branchID) ON DELETE CASCADE ON UPDATE CASCADE -- legal? or must call separately
 );
 
-DROP TABLE IF EXISTS Rewards;
 CREATE TABLE Rewards (
 	rewardName varchar(50) PRIMARY KEY,
 	points integer NOT NULL,
-	type varchar(30), 
+	type varchar(30)
 );
 
--- Aggregate Claims against OfferMenu (Weak entity)
-DROP TABLE IF EXISTS Claims;
-CREATE TABLE Claims (
+CREATE TABLE Claims (		-- Aggregate Claims against OfferMenu (Weak entity)
 	username varchar(50),
 	rewardName varchar(50),
 	OName varchar(50),
