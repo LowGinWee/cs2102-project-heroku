@@ -56,15 +56,23 @@ coke-10.50
 leaf broth-0.10
 bean juice-0.01
 happiness-99999
+
+salad-50
+pickles-10
+squid-0.45
+death-0.00
+
+stuff-99
 	*/
 	// Construct Specific SQL Query
 	await pool.query(insert_query, (err, data) => {
         if (err) {
             console.log(err);
-        }
+		}
+		res.redirect('/selectRestaurant/' + rname + '-' + location);
 	});
 
-	res.redirect('/selectRestaurant/' + rname + '-' + location);
+	
 });
 
 module.exports = router;
