@@ -19,16 +19,17 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
 	// Retrieve Information
 	var rname  = req.body.rname;
-	var location    = req.body.location;
-    var cuisinetype = req.body.cuisinetype;
-    var rating = req.body.rating;
+	var branchid    = req.body.branchid;
+    var tables = req.body.tables;
+    //var rating = req.body.rating;
     var open = req.body.open;
-    var close = req.body.close;
+	var close = req.body.close;
+	var id = req.body.admin;
 
     var opening = open + " - " + close;
 	
 	// Construct Specific SQL Query
-	var insert_query = sql_query + "('" + rname + "','" + location + "','" + cuisinetype + "','" + opening +"')";
+	var insert_query = sql_query + "('" + rname + "','" + branchid + "'," + tables + ",'" + opening +"','" + id +"')";
 	console.log(insert_query);
 	pool.query(insert_query, (err, data) => {
         if (err) {

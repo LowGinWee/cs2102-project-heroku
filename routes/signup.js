@@ -46,7 +46,7 @@ router.post('/',  async function (req, res, next) {
             } else{
                 var insertQuery = "INSERT INTO userAccount (username, email, password) VALUES" + "('" + req.body.username + "','" + req.body.email + "','" + pwd + "');\n";
                 if (req.body.manager == 'true'){
-                    insertQuery += "INSERT INTO manager (username, rname, location) values ('"  + req.body.username + "','" + req.body.rname + "','" + req.body.location + "');";
+                    insertQuery += "INSERT INTO admin (username) values ('"  + req.body.username + "');";
                 } else {
                     insertQuery += "INSERT INTO customer (username) values ('" + req.body.username + "');";
                 }

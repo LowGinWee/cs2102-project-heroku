@@ -2,7 +2,7 @@
 <html>
   <head>
 		<!-- Page Title -->
-    <title>CS2102 Add Restaurant</title>
+    <title>EDIT RestaurantProfile</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 		
 		<!-- CSS for Styling -->
@@ -17,31 +17,16 @@
 		<script src="javascripts/insertRestaurantScript.js"></script>
   </head>
   <body>
-    <h1>CS2102: <%= title%></h1>
-		<form id="html_form" action="insertRestaurant" role="form" method="post">
+    <h1>Edit <%= title%> @ <%= location%> profile</h1>
+		<form id="html_form" action="edit" role="form" method="post">
 			<div class="form-group">
-				<label for="rname">Restaurant Name</label>
-				<input type="text" class="form-control" id="rname" name="rname" placeholder="Enter Restaurant Name">
+				<label for="tables">Cuisine Type</label>
+				<input type="text" class="form-control" id="cuisine" name="cuisine" placeholder="Enter Cuisine Type">
 			</div>
 			<div class="form-group">
-				<label for="branchid">Branch ID</label>
-				<input type="text" class="form-control" id="branchid" name="branchid" placeholder="Enter branchid">
+					<label for="open">Area</label>
+					<input type="text" class="form-control" id="area" name="area" placeholder="Enter Area">
 			</div>
-			<div class="form-group">
-				<label for="tables">Max Tables</label>
-				<input type="text" class="form-control" id="tables" name="tables" placeholder="Enter Max Tables">
-			</div>
-			<div class="form-group">
-					<label for="open">Opening Time</label>
-					<input type="text" class="form-control" id="open" name="open" placeholder="Enter Opening Time">
-			</div>
-			<div class="form-group">
-					<label for="close">Closing Time</label>
-					<input type="text" class="form-control" id="close" name="close" placeholder="Enter Closing Time">
-			</div>
-			<div class="form-group">
-				<label for="admin">Admin</label>
-				<input type="text" class="form-control" id="admin" name="admin" placeholder="Enter Admin ID">
 		</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>

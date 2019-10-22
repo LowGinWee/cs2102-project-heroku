@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
 router.get('/:rname-:location', async function(req, res, next) {
 	var rname = req.params.rname;
 	var location = req.params.location;
-	var new_query = sql_query + " WHERE rname = '" + rname + "'" + " AND location = '" + location + "'";
+	var new_query =  "SELECT * FROM restaurant NATURAL JOIN restaurantprofile" + " WHERE rname = '" + rname + "'" + " AND branchid = '" + location + "'";
 
 	var data1;
 
@@ -32,24 +32,9 @@ router.get('/:rname-:location', async function(req, res, next) {
 			console.log(err);
 		} else {
 			data1 = data;
-			console.log(data1);
-			res.render('viewRestaurant', { title: rname , userData: data1.rows})
+			res.render('viewRestaurant', { title: rname , branchid: location, userData: data1.rows})
 		}
 	});
-	
-/* 	var course_query = "SELECT DISTINCT * FROM menu" +  " WHERE rname = '" + rname + "'" + " AND location = '" + location + "' ORDER BY course";
-	var menu;
-	await pool.query(course_query, (err, data) => {
-		if(err){
-			console.log(err);
-		} else {
-			menu = data;
-			res.render('viewRestaurant', { title: rname , userData: data1.rows, menu: menu.rows})
-		}
-
-
-	}); */
-
 });
 
 router.get('/:rname-:location/menu', async function(req, res, next) {
@@ -69,6 +54,31 @@ router.get('/:rname-:location/menu', async function(req, res, next) {
 
 
 	});
+
+});
+
+router.post('/:rname-:location/edit', async function(req, res, next) {
+	var rname = req.params.rname;
+	var location = req.params.location;
+	var a = req.body.area;
+	var c = req.body.cuisine;
+		// Construct Specific SQL Query
+		insert_query = "INSERT INTO RestaurantProfile VALUES ('" + rname + "','" + location + "', '" + c + "', '" + a + "') ON CONFLICT (rname,branchid) DO UPDATE SET CuisineType='" + c + "', area='" + a + "'";
+		console.log(insert_query);
+		pool.query(insert_query, (err, data) => {
+			if (err){
+				console.log(err);
+			}
+			res.redirect('/selectRestaurant/' + rname + "-" + location);
+		});
+});
+
+router.get('/:rname-:location/edit', async function(req, res, next) {
+	var rname = req.params.rname;
+	var location = req.params.location;
+
+			res.render('editRestProfile', { title: rname , location: location})
+
 
 });
 
