@@ -122,18 +122,25 @@ router.get('/:rname-:location/availability', async function(req, res, next) {
 	var new_query =  "SELECT * FROM availability WHERE rname = '" + rname + "'" + " AND branchid = '" + location + "'";
 
 	await pool.query(drop, (err, data) => {
-	});
-	await pool.query(avail_query, (err, data) => {
+		//console.log(data);
+		setTimeout(function(){}, 1000);
 	});
 
-	await pool.query(q2, (err, data) => {
-		if(err){
-			console.log(err);
-		} else {
-			console.log(data);
-			res.render('viewRestaurantAvail', { title: rname , branchid: location, userData: data.rows})
+	await pool.query(avail_query, (err, data) => {
+		if (err) {
 		}
+		setTimeout(function(){
+			pool.query(q2, (err, data) => {
+				if(err){
+					//console.log(err);
+				} else {
+					//console.log(data);
+					res.render('viewRestaurantAvail', { title: rname , branchid: location, userData: data.rows})
+				}
+			});
+		}, 1000);
 	});
+
 });
 
 module.exports = router;

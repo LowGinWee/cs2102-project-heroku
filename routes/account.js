@@ -66,8 +66,8 @@ router.get('/', async function(req, res, next) {
 
 router.get('/:user/recommend', async function(req, res, next) {
     var user = req.params.user;
-    var query = "DROP VIEW IF EXISTS preferredRestaurants; \n" +
-                "CREATE VIEW preferredRestaurants (RName, branchID, rating, avgPrice)  AS \n" +
+    var drop = "DROP VIEW IF EXISTS preferredRestaurants; \n"
+    var query =  "CREATE VIEW preferredRestaurants (RName, branchID, rating, avgPrice)  AS \n" +
                 "WITH X AS (SELECT RP.RName, RP.branchID, RP.cuisineType, RP.area, ROUND(AVG(M.price),2) as avgPrice \n" +
                     "FROM RestaurantProfile AS RP JOIN Menu AS M \n" +
                     "ON RP.RName = M.RName \n" +
@@ -89,8 +89,13 @@ router.get('/:user/recommend', async function(req, res, next) {
                 "LIMIT 3; \n";    
     var query2 = "SELECT * FROM preferredRestaurants; \n"
                 console.log(query);
-                await pool.query(query, (err, data) => {
                 
+                await pool.query(drop, (err, data) => {
+                    setTimeout(function(){},1000);
+                });
+                
+                await pool.query(query, (err, data) => {
+                    setTimeout(function(){},1000);
                 });
 
                 await pool.query(query2, (err, data) => {
