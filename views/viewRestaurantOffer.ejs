@@ -2,7 +2,7 @@
 <html>
   <head>
 		<!-- Page Title -->
-    <title>CS2102 Database Connect</title>
+    <title>Restaurate</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 		
 		<!-- CSS for Styling -->
@@ -14,32 +14,36 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   </head>
   <body>
-    <h1>CS2102: <%= title%></h1>
-		<table class="table">
-			<thead>
-				<tr>
-					<th scope="col">Usernames</th>
-					<th scope="col">Emails</th>
-					<th scope="col">Passwords</th>
-					<th scope="col">Award Points</th>
-					<th scope="col">UserProfile</th>
-				</tr>
-			</thead>
-			<tbody>
-				<% for(var i=0; i<data.length; i++) { %>
-				<tr>
-					<td><%= data[i].username%></td>
-					<td><%= data[i].email%></td>
-					<td><%= data[i].password%></td>
-					<td><%= data[i].awardpoints%></td>
-					<td><a href= "<%= "/account/" + data[i].username%>">Link</a></td>
-					
-				</tr>
-				<% } %>
-			</tbody>
-		</table>
-		<a href="/selectProfiles">Profiles</a><br/>
+    <h1>Restaurant OFFers</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+					<th scope="col">Offer</th>
+					<th scope="col">Restaurant</th>
+					<th scope="col">Branch</th>
+					<th scope="col">Course</th>
+					<th scope="col">Price</th>
+					<th scope="col">Start Date</th>
+					<th scope="col">End Date</th>					
+			</tr>
+		</thead>
+		<tbody>
+			<% for(var i=0; i<userData.length; i++) { %>
+			<tr>
+					<td><%= userData[i].oname%></td>
+					<td><%= userData[i].rname%></td>
+					<td><%= userData[i].branchid%></td>
+					<td><%= userData[i].course%></td>
+					<td><%= userData[i].price%></td>
+					<td><%= userData[i].startdate%></td>
+					<td><%= userData[i].enddate%></td>
+			</tr>
+			<% } %>
+		</tbody>
+	</table>
+
+
 		<a href="/selectRestaurant">Restaurants</a><br/>
   </body>
-
 </html>

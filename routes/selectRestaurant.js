@@ -20,6 +20,30 @@ router.get('/', function(req, res, next) {
 	});
 });
 
+router.get('/ratings', function(req, res, next) {
+	var query = "Select * from ratevisit"
+	pool.query(query, (err, data) => {
+		res.render('selectRatings', { title: 'Ratings', userData: data.rows });
+	});
+});
+
+router.get('/rewards', function(req, res, next) {
+	var query = "Select * from rewards"
+	pool.query(query, (err, data) => {
+		res.render('viewRestaurantReward', { title: 'Rewards', userData: data.rows });
+	});
+});
+
+router.get('/offers', function(req, res, next) {
+	var query = "Select * from offermenu"
+	pool.query(query, (query, data) => {
+		res.render('viewRestaurantOffer', { title: 'Offers', userData: data.rows });
+	});
+});
+
+
+
+
 router.get('/:rname-:location', async function(req, res, next) {
 	var rname = req.params.rname;
 	var location = req.params.location;

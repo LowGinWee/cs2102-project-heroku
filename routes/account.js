@@ -26,6 +26,18 @@ router.get('/', async function(req, res, next) {
     }
   });
 
+  router.get('/:user', async function(req, res, next) {
+    var sql_query = "SELECT * FROM userAccount u LEFT OUTER JOIN preferences p ON (u.username = p.username) WHERE u.username = '";
+
+        var username = req.params.user
+        sql_query = sql_query + username + "'";
+        console.log(sql_query);
+        pool.query(sql_query, (err, data) => {
+            res.render('account', { title: 'Account', username: username, userData: data.rows});
+        });
+        
+  });
+
   router.get('/:user/friends', async function(req, res, next) {
     var user = req.params.user;
     var getFriends = "(SELECT friendUsername FROM Friends where myUsername = '" + user + "')";
@@ -99,10 +111,82 @@ router.get('/:user/recommend', async function(req, res, next) {
                 });
 
                 await pool.query(query2, (err, data) => {
+                    if (data == null) {
+                        res.render('recommend', { title: 'Recommendation', username: user, userData: data});
+                    } else 
                     res.render('recommend', { title: 'Recommendation', username: user, userData: data.rows});
                 
                 });
   });
+
+  router.get('/:user/favourites', async function(req, res, next) {
+    var user = req.params.user;
+    var query = "select * from favourites where username ='" + user +"'";
+    console.log(query);
+    await pool.query(query, (err, data) => {
+        res.render('favourites', { title: 'Favourites', username: user, userData : data.rows});
+    
+    });   
+
+  });
+
+  router.get('/:user/reservation', async function(req, res, next) {
+    var user = req.params.user;
+    var query = "select * from Reservation where username ='" + user +"'";
+    console.log(query);
+    await pool.query(query, (err, data) => {
+        if (data == null) {
+            res.render('reservation', { title: 'Reservation', username: user, userData: data});
+        } else 
+        res.render('reservation', { title: 'Reservation', username: user, userData: data.rows}); 
+    });   
+  });
+
+  router.get('/:user/rate/:rname-:branchid-:year.:month.:day-:time', async function(req, res, next) {
+    var user = req.params.user;
+    var rname = req.params.rname;
+    var branchid = req.params.branchid;
+    var year = req.params.year;
+    var month = req.params.month;
+    var day = req.params.day;
+    var time = req.params.time;
+
+    year = parseInt(year) + 1900;
+
+    date = year +"-"+month+"-"+day;
+
+    console.log(user+ "  " + rname+ " " + branchid+ " " +date + " " + time);
+
+
+
+    res.render('rate', { title: 'Rate', username: user,  rname: rname, branchid: branchid, year: year, time: time}); 
+  });
+
+  router.post('/:user/rate/:rname-:branchid-:year-:month-:day-:time', async function(req, res, next) {
+    var user = req.params.user;
+    var rname = req.params.rname;
+    var branchid = req.params.branchid;
+    var year = req.params.year;
+    var month = req.params.month;
+    var day = req.params.day;
+    var time = req.params.time;
+    var rating = req.body.rating;
+
+
+    year = year +"-"+month+"-"+day;
+
+    console.log(user+ "  " + rname+ " " + branchid+ " " +date + " " + time);
+    console.log(rating);
+    var query = "INSERT INTO ratevisit (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('"+user+"','"+rname+"','"+branchid+"','"+year+"','"+time+"',"+rating+",true);"
+    console.log(query);
+
+    await pool.query(query, (err, data) => {
+        res.redirect('/selectRestaurant/ratings', { title: 'Ratings'}); 
+    }); 
+ 
+  });
+
+
 
   
   module.exports = router;

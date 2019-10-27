@@ -14,48 +14,33 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   </head>
   <body>
-    <h1>Welcome <%= username%></h1>
-    <p>User Details</p>
-
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Username</th>
-            <th scope="col">Email</th>
-            <th scope="col">Award Points</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><%= username%></td>
-            <td><%= userData[0].email%></td>
-            <td><%= userData[0].awardpoints%></td>
-          </tr>
-        </tbody>
-      </table>
-
+    <h1>Reservations for <%= username%></h1>
       <table class="table">
           <thead>
             <tr>
-              <th scope="col">Favourite Cuisine</th>
-              <th scope="col">Favourite Location</th>
-              <th scope="col">Budget</th>
+              <th scope="col">Restaurant</th>
+              <th scope="col">BranchID</th>
+              <th scope="col">Tables</th>
+              <th scope="col">Date</th>
+              <th scope="col">Time</th>
+              <th scope="col">Rate</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><%= userData[0].prefcuisinetype%></td>
-              <td><%= userData[0].prefarea%></td>
-              <td>$<%= userData[0].prefbudget%></td>
-            </tr>
-          </tbody>
+              <% for(var i=0; i<userData.length; i++) { %>
+              <tr>
+                              <td><%= userData[i].rname%></td>
+                              <td><%= userData[i].branchid%></td>
+                              <td><%= userData[i].numtables%></td>
+                              <td><%= userData[i].reservedate%></td>
+                              <td>$<%= userData[i].reservetime%></td>
+                              <td><a href= "<%= "/account/" + userData[i].username + "/rate/" + userData[i].rname + "-" + userData[i].branchid + "-" + userData[i].reservedate.getYear() + "." + userData[i].reservedate.getMonth() + "." + userData[i].reservedate.getDate() + "-" + userData[i].reservetime%>">Link</a></td>
+              </tr>
+              <% } %>
+            </tbody>
         </table>
-        <a href="/updatepreference">update preferences</a><br/>
-        <a href="/account/<%= username%>/friends">Friends</a><br/>
-        <a href="/account/<%= username%>/favourites">favourites</a><br/>
-        <a href="/account/<%= username%>/recommend">recommendations</a><br/>
-        <a href="/account/<%= username%>/reservation">reservation</a><br/>
   <a href="/">home</a><br/>
+  <a href="/account/<%= username%>/addfriends">Friends</a><br/>
   <a href="/logout">Logout</a><br/>
 	
   </body>

@@ -2,7 +2,7 @@
 <html>
   <head>
 		<!-- Page Title -->
-    <title>CS2102 Database Connect</title>
+    <title>CS2102 Select Restaurant</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 		
 		<!-- CSS for Styling -->
@@ -14,32 +14,36 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   </head>
   <body>
-    <h1>CS2102: <%= title%></h1>
+    <h1><%= title%></h1>
 		<table class="table">
 			<thead>
 				<tr>
-					<th scope="col">Usernames</th>
-					<th scope="col">Emails</th>
-					<th scope="col">Passwords</th>
-					<th scope="col">Award Points</th>
-					<th scope="col">UserProfile</th>
+					<th scope="col">Username</th>
+					<th scope="col">Restaurant</th>
+					<th scope="col">BranchID</th>
+					<th scope="col">Reserved Date</th>
+					<th scope="col">Reserved Time</th>
+					<th scope="col">Ratings</th>
+					<th scope="col">Confirmed</th>
 				</tr>
 			</thead>
 			<tbody>
-				<% for(var i=0; i<data.length; i++) { %>
+				<% for(var i=0; i<userData.length; i++) { %>
 				<tr>
-					<td><%= data[i].username%></td>
-					<td><%= data[i].email%></td>
-					<td><%= data[i].password%></td>
-					<td><%= data[i].awardpoints%></td>
-					<td><a href= "<%= "/account/" + data[i].username%>">Link</a></td>
-					
+                        <td><%= userData[i].username%></td>
+						<td><%= userData[i].rname%></td>
+						<td><%= userData[i].branchid%></td>
+						<td><%= userData[i].reservedate%></td>
+						<td><%= userData[i].reservetime%></td>
+						<td><%= userData[i].rating%></td>
+						<td><%= userData[i].confirmation%></td>
+
+
 				</tr>
 				<% } %>
 			</tbody>
-		</table>
-		<a href="/selectProfiles">Profiles</a><br/>
-		<a href="/selectRestaurant">Restaurants</a><br/>
+        </table>
+		<a href="/select">Accounts</a><br/>
+		<a href="/insertRestaurant">Add a Restaurant</a><br/>
   </body>
-
 </html>
