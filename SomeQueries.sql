@@ -65,7 +65,7 @@ WITH reservedTablesCount(RName, branchID, totalreserved, reserveDate, reserveTim
 AS
 (SELECT R.Rname, R.branchID, SUM(R.numTables) AS totalreserved, R.reserveDate, R.reserveTime
 FROM Reservation R
-WHERE R.reserveDate = '2019-11-16' AND R.reserveTime = '14:00' -- reserveDate and reserveTime can be specified
+--WHERE R.reserveDate = '2019-11-16' AND R.reserveTime = '14:00' -- reserveDate and reserveTime can be specified
 GROUP BY R.Rname, R.branchID, R.reserveDate, R.reserveTime
 )
 SELECT A.Rname, A.branchID, (A.numTables - R.totalreserved) AS capacityLeft, R.reserveDate, R.reserveTime
@@ -73,6 +73,28 @@ FROM Availability A
 FULL JOIN reservedTablesCount R
 ON A.RName = R.RName AND A.branchID = R.branchID
 WHERE A.Rname = 'Astons' AND A.branchID = 'Clementi'; -- rName and branchID can be specified
+
+select * from availableCapacity;
+
+--edited query to show all availability at a restaurant
+DROP VIEW IF EXISTS availableCapacity;
+CREATE VIEW availableCapacity(RName, branchID, capacityLeft, reserveDate, reserveTime) AS
+WITH reservedTablesCount(RName, branchID, totalreserved, reserveDate, reserveTime)
+AS
+(SELECT R.Rname, R.branchID, SUM(R.numTables) AS totalreserved, R.reserveDate, R.reserveTime
+FROM Reservation R
+GROUP BY R.Rname, R.branchID, R.reserveDate, R.reserveTime
+)
+SELECT A.Rname, A.branchID, 
+    (CASE 
+        when R.totalreserved is null THEN A.numTables
+        ELSE A.numTables - R.totalreserved END) AS capacityLeft, A.reserveDate, A.reserveTime , R.totalreserved, A.numTables
+FROM Availability A 
+Left JOIN reservedTablesCount R
+ON A.RName = R.RName AND A.branchID = R.branchID AND A.reserveDate = R.reserveDate AND A.reserveTime = R.reserveTime
+WHERE A.Rname = 'Astons' AND A.branchID = 'Clementi'; -- rName and branchID can be specified
+
+select * from availableCapacity;
 
 /*
 QUERIES ON REWARDS
