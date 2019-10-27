@@ -20,7 +20,6 @@
 				<tr>
 					<th scope="col">Usernames</th>
 					<th scope="col">Favourite Cuisine</th>
-					<th scope="col">Time of Meals</th>
                     <th scope="col">Favourite Location</th>
                     <th scope="col">Budget</th>
 				</tr>
@@ -29,10 +28,9 @@
 				<% for(var i=0; i<userData.length; i++) { %>
 				<tr>
                         <td><%= userData[i].username%></td>
-                        <td><%= userData[i].cuisinetype%></td>
-                        <td><%= userData[i].preftime%></td>
-                        <td><%= userData[i].location%></td>
-                        <td>$<%= userData[i].budget%></td>
+                        <td><%= userData[i].prefcuisinetype%></td>
+                        <td><%= userData[i].prefarea%></td>
+                        <td><%= userData[i].prefbudget%></td>
 				</tr>
 				<% } %>
 			</tbody>

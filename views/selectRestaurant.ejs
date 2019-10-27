@@ -24,6 +24,7 @@
 					<th scope="col">Admin</th>
 					<th scope="col">Restaurant profile</th>
 					<th scope="col">Restaurant menu</th>
+					<th scope="col">Restaurant availability</th>
 					<th scope="col">Restaurant Insert Menu</th>
 				</tr>
 			</thead>
@@ -36,6 +37,7 @@
 						<td><%= userData[i].adminid%></td>
 						<td><a href= "<%= "/selectRestaurant/" +  userData[i].rname + "-" + userData[i].branchid%>"</a>link</a></td>
 						<td><a href= "<%= "/selectRestaurant/" +  userData[i].rname + "-" + userData[i].branchid%>/menu"</a>link</a></td>
+						<td><a href= "<%= "/selectRestaurant/" +  userData[i].rname + "-" + userData[i].branchid%>/availability"</a>link</a></td>
 						<td><a href= "<%= "/insertMenu/" +  userData[i].rname + "-" + userData[i].branchid%>"</a>link</a></td>
 
 				</tr>

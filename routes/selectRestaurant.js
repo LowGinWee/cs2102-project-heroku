@@ -23,8 +23,8 @@ router.get('/', function(req, res, next) {
 router.get('/:rname-:location', async function(req, res, next) {
 	var rname = req.params.rname;
 	var location = req.params.location;
-	var new_query =  "SELECT * FROM restaurant NATURAL JOIN restaurantprofile" + " WHERE rname = '" + rname + "'" + " AND branchid = '" + location + "'";
-
+	var new_query =  "SELECT * FROM restaurant r LEFT OUTER JOIN restaurantprofile p ON (r.rname = p.rname)" + " WHERE r.rname = '" + rname + "'" + " AND r.branchid = '" + location + "'";
+	console.log(new_query);
 	var data1;
 
 	await pool.query(new_query, (err, data) => {
@@ -42,7 +42,7 @@ router.get('/:rname-:location/menu', async function(req, res, next) {
 	var location = req.params.location;
 
 	
-	var course_query = "SELECT DISTINCT * FROM menu" +  " WHERE rname = '" + rname + "'" + " AND location = '" + location + "' ORDER BY course";
+	var course_query = "SELECT DISTINCT * FROM menu" +  " WHERE rname = '" + rname + "'" + " AND branchID = '" + location + "' ORDER BY course";
 	var menu;
 	await pool.query(course_query, (err, data) => {
 		if(err){
@@ -51,8 +51,6 @@ router.get('/:rname-:location/menu', async function(req, res, next) {
 			menu = data;
 			res.render('viewRestaurantMenu', { title: rname , location: location, menu: menu.rows})
 		}
-
-
 	});
 
 });
@@ -80,6 +78,40 @@ router.get('/:rname-:location/edit', async function(req, res, next) {
 			res.render('editRestProfile', { title: rname , location: location})
 
 
+});
+
+router.get('/:rname-:location/availability', async function(req, res, next) {
+	var rname = req.params.rname;
+	var location = req.params.location;
+	var new_query =  "SELECT * FROM availability WHERE rname = '" + rname + "'" + " AND branchid = '" + location + "'";
+	console.log(new_query);
+	var data1;
+
+	await pool.query(new_query, (err, data) => {
+		if(err){
+			console.log(err);
+		} else {
+			data1 = data;
+			res.render('viewRestaurantAvail', { title: rname , branchid: location, userData: data1.rows})
+		}
+	});
+});
+
+router.get('/:rname-:location/reserve', async function(req, res, next) {
+	var rname = req.params.rname;
+	var location = req.params.location;
+	var new_query =  "SELECT * FROM availability WHERE rname = '" + rname + "'" + " AND branchid = '" + location + "'";
+	console.log(new_query);
+	var data1;
+
+	await pool.query(new_query, (err, data) => {
+		if(err){
+			console.log(err);
+		} else {
+			data1 = data;
+			res.render('viewRestaurantAvail', { title: rname , branchid: location, userData: data1.rows})
+		}
+	});
 });
 
 module.exports = router;

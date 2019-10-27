@@ -20,15 +20,11 @@
 
   </head>
   <body>
-    <h1>Update Preferences <%= title%></h1>
+    <h1><%= title%></h1>
 		<form id="html_form" action="updatePreference" role="form" method="post">
 			<div class="form-group">
 				<label for="cuisinetype">Favourite Cuisine</label>
 				<input type="text" class="form-control" id="cuisinetype" name="cuisinetype" aria-describedby="cuisinetype" value = "" placeholder="Enter your cuisine">
-			</div>
-			<div class="form-group">
-				<label for="preftime">Time of Meals</label>
-				<input type="text" class="form-control" id="preftime" name="preftime" placeholder="Enter your time in hours">
 			</div>
 			<div class="form-group">
 				<label for="location">Favourite Location</label>
@@ -52,10 +48,9 @@
 			})();
         </script>
                 <script>
-                    document.getElementById('cuisinetype').value =  "<%= userData[0].cuisinetype%>";
-                    document.getElementById('preftime').value =  "<%= userData[0].preftime%>";
-                    document.getElementById('location').value =  "<%= userData[0].location%>";
-                    document.getElementById('budget').value =  "<%= userData[0].budget%>";
+                    document.getElementById('cuisinetype').value =  "<%= userData[0].prefCuisinetype%>";
+                    document.getElementById('location').value =  "<%= userData[0].prefArea%>";
+                    document.getElementById('budget').value =  "<%= userData[0].prefBudget%>";
                 </script>
   </body>
 </html>

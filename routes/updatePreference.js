@@ -38,7 +38,6 @@ router.get('/',async function(req, res, next) {
 router.post('/', async function(req, res, next) {
 	// Retrieve Information
     var cuisinetype  = req.body.cuisinetype;
-    var preftime  = req.body.preftime;
     var location  = req.body.location;
     var budget  = req.body.budget;
     await (req.user)
@@ -46,7 +45,7 @@ router.post('/', async function(req, res, next) {
 
 	
 	// Construct Specific SQL Query
-    insert_query = "INSERT INTO preferences VALUES ('" + username + "','" + cuisinetype + "', " + preftime + ", '" + location + "', " + budget + ") ON CONFLICT (username) DO UPDATE SET cuisinetype='" + cuisinetype + "',preftime=" + preftime + ", location='" + location + "', budget=" + budget;
+    insert_query = "INSERT INTO preferences VALUES ('" + username + "','" + cuisinetype + "','" + location + "', " + budget + ") ON CONFLICT (username) DO UPDATE SET prefCuisinetype='" + cuisinetype + "', prefArea='" + location + "', prefBudget=" + budget;
     console.log(insert_query);
 	pool.query(insert_query, (err, data) => {
         if(err) {
