@@ -18,7 +18,6 @@ router.get('/', async function(req, res, next) {
         sql_query = sql_query + req.user.username + "'";
         console.log(sql_query);
         pool.query(sql_query, (err, data) => {
-            console.log(data.rows[0].preftime);
             res.render('account', { title: 'Account', username: username, userData: data.rows});
         });
         
@@ -64,6 +63,41 @@ router.get('/', async function(req, res, next) {
        res.redirect('/account/');
     });
 });
+
+router.get('/:user/recommend', async function(req, res, next) {
+    var user = req.params.user;
+    var query = "DROP VIEW IF EXISTS preferredRestaurants; \n" +
+                "CREATE VIEW preferredRestaurants (RName, branchID, rating, avgPrice)  AS \n" +
+                "WITH X AS (SELECT RP.RName, RP.branchID, RP.cuisineType, RP.area, ROUND(AVG(M.price),2) as avgPrice \n" +
+                    "FROM RestaurantProfile AS RP JOIN Menu AS M \n" +
+                    "ON RP.RName = M.RName \n" +
+                    "AND RP.branchID = M.branchID \n" +
+                    "AND M.course = 'Main' \n" +
+                    "GROUP BY RP.RName, RP.branchID), \n" +
+                "Y AS (SELECT RV.RName, RV.branchID, ROUND(AVG(RV.rating),1) as avgRating \n" +
+                    "FROM RateVisit AS RV \n" +
+                    "GROUP BY RV.RName, RV.branchID) \n" +
+                "SELECT X.RName, X.branchID, Y.avgRating, X.avgPrice \n" +
+                "FROM X, Preferences AS P, Y \n" +
+                "WHERE P.username = '" + user + "' \n" +
+                "AND P.prefArea = X.area \n" +
+                "AND P.prefCuisinetype = X.cuisineType \n" +
+                "AND P.prefBudget >= X.avgPrice \n" +
+                "AND Y.RName = X.RName \n" +
+                "AND Y.branchID = X.branchID \n" +
+                "ORDER BY Y.avgRating DESC, X.avgPrice ASC \n" +
+                "LIMIT 3; \n";    
+    var query2 = "SELECT * FROM preferredRestaurants; \n"
+                console.log(query);
+                await pool.query(query, (err, data) => {
+                
+                });
+
+                await pool.query(query2, (err, data) => {
+                    res.render('recommend', { title: 'Recommendation', username: user, userData: data.rows});
+                
+                });
+  });
 
   
   module.exports = router;

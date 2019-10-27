@@ -15,44 +15,34 @@
   </head>
   <body>
     <h1>Welcome <%= username%></h1>
-    <p>User Details</p>
+    <p>Based on your preferences, we recommend the following Restaurants</p>
 
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">Username</th>
-            <th scope="col">Email</th>
-            <th scope="col">Award Points</th>
+            <th scope="col">Restaurant</th>
+            <th scope="col">Branch</th>
+            <th scope="col">Ratings</th>
+            <th scope="col">Average Price</th>
           </tr>
         </thead>
         <tbody>
+          <% for(var i=0; i<userData.length; i++) { %>
           <tr>
-            <td><%= username%></td>
-            <td><%= userData[0].email%></td>
-            <td><%= userData[0].awardpoints%></td>
+            <tr>
+              <td><%= userData[i].rname%></td>
+              <td><%= userData[i].branchid%></td>
+              <td><%= userData[i].rating%></td>
+              <td><%= userData[i].avgprice%></td>
+            </tr>
           </tr>
+          <% } %>
         </tbody>
+
       </table>
 
-      <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Favourite Cuisine</th>
-              <th scope="col">Favourite Location</th>
-              <th scope="col">Budget</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><%= userData[0].prefCuisinetype%></td>
-              <td><%= userData[0].prefArea%></td>
-              <td>$<%= userData[0].prefBudget%></td>
-            </tr>
-          </tbody>
-        </table>
         <a href="/updatepreference">update preferences</a><br/>
         <a href="/account/<%= username%>/friends">Friends</a><br/>
-        <a href="/account/<%= username%>/recommend">recommendations</a><br/>
   <a href="/">home</a><br/>
   <a href="/logout">Logout</a><br/>
 	
