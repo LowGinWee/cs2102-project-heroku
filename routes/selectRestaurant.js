@@ -100,8 +100,8 @@ router.get('/:rname-:location/edit', async function(req, res, next) {
 router.get('/:rname-:location/availability', async function(req, res, next) {
 	var rname = req.params.rname;
 	var location = req.params.location;
-	var avail_query = "DROP VIEW IF EXISTS availableCapacity; \n" + 
-	"CREATE VIEW availableCapacity(RName, branchID, capacityLeft, reserveDate, reserveTime) AS\n" + 
+	var drop = "DROP VIEW IF EXISTS availableCapacity; \n"
+	var avail_query = 	"CREATE VIEW availableCapacity(RName, branchID, capacityLeft, reserveDate, reserveTime) AS\n" + 
 	"WITH reservedTablesCount(RName, branchID, totalreserved, reserveDate, reserveTime)\n" + 
 	"	AS\n" + 
 	"	(SELECT R.Rname, R.branchID, SUM(R.numTables) AS totalreserved, R.reserveDate, R.reserveTime\n" + 
@@ -115,13 +115,14 @@ router.get('/:rname-:location/availability', async function(req, res, next) {
 	"FROM Availability A \n" + 
 	"Left JOIN reservedTablesCount R\n" + 
 	"ON A.RName = R.RName AND A.branchID = R.branchID AND A.reserveDate = R.reserveDate AND A.reserveTime = R.reserveTime\n" + 
-	"WHERE A.Rname = 'Astons' AND A.branchID = 'Clementi'; -- rName and branchID can be specified\n";
+	"WHERE A.Rname = '"+ rname+"' AND A.branchID = '"+ location+"'; -- rName and branchID can be specified\n";
 	
 	var q2 = "select * from availableCapacity;";
 	
 	var new_query =  "SELECT * FROM availability WHERE rname = '" + rname + "'" + " AND branchid = '" + location + "'";
 
-	
+	await pool.query(drop, (err, data) => {
+	});
 	await pool.query(avail_query, (err, data) => {
 	});
 
