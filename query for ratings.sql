@@ -33,7 +33,7 @@ CREATE OR REPLACE FUNCTION updateUser() RETURNS TRIGGER AS
 		WHERE uA.username = NEW.username AND r.rewardName =  NEW.rewardName
 		INTO isValid;
 		if (isValid = TRUE) THEN
-		UPDATE userAccount SET awardPoints = uA.awardPoints - r.points FROM userAccount uA, Rewards r WHERE uA.username = NEW.username AND r.rewardName = NEW.rewardName AND userAccount.username = NEW.username;
+		UPDATE userAccount SET awardPoints = uA.awardPoints - r.points FROM userAccount uA, Rewards r WHERE uA.username = NEW.username AND r.rewardName = NEW.rewardName;
 		RETURN NEW;
 		ELSE
 		RAISE NOTICE 'Sorry. You do not have enough points for this claim'; 
@@ -50,7 +50,11 @@ BEFORE INSERT ON claims
 FOR EACH ROW EXECUTE PROCEDURE updateUser();
 
 
-
+INSERT INTO "useraccount" (username,email,password,awardPoints) VALUES ('PointsTriggerTester5','do2esth2swork@gmail.com','123123',50);
+select * from userAccount where username = 'PointsTriggerTester5';
+INSERT INTO "customer" (username) VALUES ('PointsTriggerTester5');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('PointsTriggerTester5','Holiday Giveaway','Hirame Sushi','Itacho Sushi','Tampines','2019-12-20','16:00');
+select * from userAccount where username = 'PointsTriggerTester5';
 
 
 CREATE OR REPLACE FUNCTION checkMaxTables() RETURNS TRIGGER AS
@@ -76,13 +80,5 @@ CREATE TRIGGER trig4
 BEFORE INSERT ON availability 
 FOR EACH ROW EXECUTE PROCEDURE checkMaxTables();
 
-INSERT INTO "useraccount" (username,email,password,awardPoints) VALUES ('PointsTriggerTester9','do2es5tsh2swork@2gmail.com','123123',100);
-select * from userAccount where username = 'PointsTriggerTester9';
-INSERT INTO "customer" (username) VALUES ('PointsTriggerTester9');
-INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('PointsTriggerTester','Holiday Giveaway','Hirame Sushi','Itacho Sushi','Tampines','2019-12-20','16:00');
-select * from userAccount where username = 'PointsTriggerTester';
 
- INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('High End West','Lakeside',1000,'2019-12-20','11:00');
-
-
-
+ INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('High End West','Lakeside',0,'2019-12-10','11:00');
