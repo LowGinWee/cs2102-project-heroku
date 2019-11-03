@@ -178,14 +178,12 @@ RETURNS TRIGGER AS $$ BEGIN
 RAISE NOTICE 'Sorry. The Offer has not started or expired'; 
 RETURN NULL;
 END; $$ LANGUAGE plpgsql;
-
 	
 DROP TRIGGER IF EXISTS trig2 ON public.claims;
 CREATE TRIGGER trig2
 BEFORE INSERT ON claims
 FOR EACH ROW WHEN  (checkValid(NEW.OName, NEW.RName, NEW.branchID, NEW.claimDate))
 EXECUTE PROCEDURE checkClaim();
-
 
 CREATE OR REPLACE FUNCTION updateUser() RETURNS TRIGGER AS
 	$$
@@ -210,10 +208,6 @@ DROP TRIGGER IF EXISTS trig4 ON public.claims;
 CREATE TRIGGER trig4
 BEFORE INSERT ON claims 
 FOR EACH ROW EXECUTE PROCEDURE updateUser();
-
-
-
-
 
 CREATE OR REPLACE FUNCTION checkMaxTables() RETURNS TRIGGER AS
 	$$
