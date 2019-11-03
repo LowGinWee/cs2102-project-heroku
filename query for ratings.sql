@@ -1,84 +1,49 @@
-CREATE OR REPLACE FUNCTION checkValid(offer varchar(50), restaurant varchar(100), myBranchId varchar(100), checkClaimDate date)
-	RETURNS BOOLEAN AS
-	$$ 
-	DECLARE 
-		isValid BOOLEAN;
-	BEGIN
-	SELECT checkClaimDate < Om.startDate OR checkClaimDate > Om.endDate FROM OfferMenu Om 
-		WHERE offer = Om.Oname AND restaurant = Om.Rname AND myBranchId = Om.branchID
-	INTO isValid;
-	RETURN isValid;
-	END; 
-	$$ LANGUAGE plpgsql;
-	
-CREATE OR REPLACE FUNCTION checkClaim()
-RETURNS TRIGGER AS $$ BEGIN
-RAISE NOTICE 'Sorry. The Offer has not started or expired'; 
-RETURN NULL;
-END; $$ LANGUAGE plpgsql;
+DROP FUNCTION getRatings2(myDate date, daysCount integer, orderBy varchar(50));
+Create or REPLACE FUNCTION getRatings2(myDate date, daysCount integer, orderBy varchar(50)) RETURNS TABLE (Rname varchar(50), BranchID varchar(50), Rating numeric, Dinners bigint) AS
+$$
+begin
+IF (OrderBy = 'Dinners') THEN
+RETURN QUERY
+Select rv.RName, rv.branchID, AVG(rv.rating) AS Rating, Count(rv.RName) as Dinners
+FROM RateVisit rv 
+Where rv.ReserveDate < myDate + daysCount AND rv.ReserveDate >= myDate
+Group By rv.Rname, rv.BranchID ORDER BY Dinners DESC;
+ELSE 
+RETURN QUERY
+Select rv.RName, rv.branchID, AVG(rv.rating) AS Rating, Count(rv.RName) as Dinners
+FROM RateVisit rv 
+Where rv.ReserveDate < myDate + daysCount AND rv.ReserveDate >= myDate
+Group By rv.Rname, rv.BranchID ORDER BY Rating DESC;
+END IF;
+end;
+$$
+LANGUAGE plpgsql;
 
-	
-DROP TRIGGER IF EXISTS trig2 ON public.claims;
-CREATE TRIGGER trig2
-BEFORE INSERT ON claims
-FOR EACH ROW WHEN  (checkValid(NEW.OName, NEW.RName, NEW.branchID, NEW.claimDate))
-EXECUTE PROCEDURE checkClaim();
+SELECT * from getRatings2('2019-11-02', 100, 'Dinners');
 
-
-CREATE OR REPLACE FUNCTION updateUser() RETURNS TRIGGER AS
-	$$
-	DECLARE isValid BOOLEAN;
-	BEGIN
-		SELECT uA.awardPoints >= r.points  FROM userAccount uA, Rewards r
-		WHERE uA.username = NEW.username AND r.rewardName =  NEW.rewardName
-		INTO isValid;
-		if (isValid = TRUE) THEN
-		UPDATE userAccount SET awardPoints = uA.awardPoints - r.points FROM userAccount uA, Rewards r WHERE uA.username = NEW.username AND r.rewardName = NEW.rewardName;
-		RETURN NEW;
-		ELSE
-		RAISE NOTICE 'Sorry. You do not have enough points for this claim'; 
-		RETURN NULL;
-		END IF;
-		RETURN NULL;
-	END; 
-	$$
- LANGUAGE plpgsql;
-
-DROP TRIGGER IF EXISTS trig4 ON public.claims;
-CREATE TRIGGER trig4
-BEFORE INSERT ON claims 
-FOR EACH ROW EXECUTE PROCEDURE updateUser();
+SELECT * from getRatings2('2019-11-02', 100, 'Rating');
 
 
-INSERT INTO "useraccount" (username,email,password,awardPoints) VALUES ('PointsTriggerTester5','do2esth2swork@gmail.com','123123',50);
-select * from userAccount where username = 'PointsTriggerTester5';
-INSERT INTO "customer" (username) VALUES ('PointsTriggerTester5');
-INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('PointsTriggerTester5','Holiday Giveaway','Hirame Sushi','Itacho Sushi','Tampines','2019-12-20','16:00');
-select * from userAccount where username = 'PointsTriggerTester5';
 
 
-CREATE OR REPLACE FUNCTION checkMaxTables() RETURNS TRIGGER AS
-	$$
-	DECLARE isValid BOOLEAN;
-	BEGIN
-		SELECT NEW.numTables <= r.maxTables FROM Restaurant r
-		WHERE r.RName = NEW.RName AND r.branchID = NEW.branchID
-		INTO isValid;
-		if (isValid = TRUE) THEN
-		RETURN NEW;
-		ELSE
-		RAISE NOTICE 'WARNING, You are allocating more tables than available'; 
-		RETURN NULL;
-		END IF;
-		RETURN NULL;
-	END; 
-	$$
- LANGUAGE plpgsql;
-
-DROP TRIGGER IF EXISTS trig5 ON public.availability;
-CREATE TRIGGER trig4
-BEFORE INSERT ON availability 
-FOR EACH ROW EXECUTE PROCEDURE checkMaxTables();
 
 
- INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('High End West','Lakeside',0,'2019-12-10','11:00');
+
+
+
+
+
+
+
+
+
+/*Create or REPLACE FUNCTION dateTest(myDate date, daysCount integer) RETURNS TABLE (dater date) AS
+$$
+begin RETURN QUERY
+Select myDate + daysCount;
+
+end;
+$$
+LANGUAGE plpgsql;
+
+SELECT * from dateTest('2019-12-22', 10); */
