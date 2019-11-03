@@ -49,10 +49,6 @@ CREATE TRIGGER trig4
 BEFORE INSERT ON claims 
 FOR EACH ROW EXECUTE PROCEDURE updateUser();
 
-
-
-
-
 CREATE OR REPLACE FUNCTION checkMaxTables() RETURNS TRIGGER AS
 	$$
 	DECLARE isValid BOOLEAN;
@@ -76,13 +72,42 @@ CREATE TRIGGER trig4
 BEFORE INSERT ON availability 
 FOR EACH ROW EXECUTE PROCEDURE checkMaxTables();
 
-INSERT INTO "useraccount" (username,email,password,awardPoints) VALUES ('PointsTriggerTester9','do2es5tsh2swork@2gmail.com','123123',100);
-select * from userAccount where username = 'PointsTriggerTester9';
-INSERT INTO "customer" (username) VALUES ('PointsTriggerTester9');
-INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('PointsTriggerTester','Holiday Giveaway','Hirame Sushi','Itacho Sushi','Tampines','2019-12-20','16:00');
-select * from userAccount where username = 'PointsTriggerTester';
+CREATE OR REPLACE FUNCTION getCurrTables(myRName varchar(100), myBranchID varchar(100), myReserveDate date, myReserveTime time)
+	RETURNS integer AS
+	$$ 
+	DECLARE 
+		currtables integer;
+	BEGIN
+	WITH reservedTablesCount(RName, branchID, totalreserved, reserveDate, reserveTime) AS 
+		(SELECT R.Rname, R.branchID, SUM(R.numTables) AS totalreserved, R.reserveDate, R.reserveTime
+		FROM Reservation R
+		WHERE R.reserveDate = myReserveDate 
+		AND R.reserveTime = myReserveTime
+		GROUP BY R.Rname, R.branchID, R.reserveDate, R.reserveTime)
+	SELECT A.numTables - R.totalreserved
+	INTO currtables -- set variable
+	FROM Availability A 
+	FULL JOIN reservedTablesCount R
+	ON A.RName = R.RName 
+	AND A.branchID = R.branchID
+	WHERE A.Rname = myRName 
+	AND A.branchID = myBranchID; -- rName and branchID can be specified
+	RETURN currtables;
+	END; 
+	$$ LANGUAGE plpgsql;
+		
+CREATE OR REPLACE FUNCTION checkReservation()
+RETURNS TRIGGER AS $$ BEGIN
+RAISE NOTICE 'Sorry! Restaurant is over-booked at this timing.'; 
+RETURN NULL;
+END; $$ LANGUAGE plpgsql;
+	
+DROP TRIGGER IF EXISTS trig1 ON public.reservation;
+CREATE TRIGGER trig1
+BEFORE INSERT ON Reservation
+FOR EACH ROW WHEN (NEW.numtables > getCurrTables(NEW.rname,NEW.branchID, NEW.reserveDate, NEW.reserveTime))
+EXECUTE PROCEDURE checkReservation();
 
- INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('High End West','Lakeside',1000,'2019-12-20','11:00');
 
 
 
