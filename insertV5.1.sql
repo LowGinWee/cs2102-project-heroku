@@ -231,3 +231,9 @@ INSERT INTO "rewards" (rewardName,points,type) VALUES ('Holiday Giveaway',40,'ho
 
 INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Celeste','30% off any purchase','Christmas Turkey','Astons','Ang Mo Kio','2019-12-16','14:00');
 INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Amethyst','Holiday Giveaway','Hirame Sushi','Itacho Sushi','Tampines','2019-12-20','16:00');
+
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Alexandra','30% off any purchase','Christmas Turkey','Astons','Ang Mo Kio','2019-12-10','14:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Alexandra','Holiday Giveaway','Hirame Sushi','Itacho Sushi','Tampines','2019-12-29','16:00');
+
+INSERT INTO "useraccount" (username,email,password,awardPoints) VALUES ('PointsTriggerTester','doesthiswork@gmail.com','123123',20);
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('PointsTriggerTester','Holiday Giveaway','Hirame Sushi','Itacho Sushi','Tampines','2019-12-20','16:00');

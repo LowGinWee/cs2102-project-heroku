@@ -156,5 +156,6 @@ CREATE TABLE Claims (		-- Aggregate Claims against OfferMenu (Weak entity)
 	claimTime time NOT NULL,
 	PRIMARY KEY (username, rewardName, OName, RName, branchID),
 	FOREIGN KEY (OName, RName, branchID) REFERENCES OfferMenu (OName, RName, branchID),
-	FOREIGN KEY (username) REFERENCES customer (username) 
+	FOREIGN KEY (username) REFERENCES customer (username) ,
+	FOREIGN KEY (rewardName) REFERENCES Rewards (rewardName)
 );
