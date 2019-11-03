@@ -87,6 +87,16 @@ INSERT INTO "friends" (myUsername, friendUsername) VALUES ('Brody', 'Dennis');
 INSERT INTO "friends" (myUsername, friendUsername) VALUES ('Eaton', 'Hanna');
 INSERT INTO "friends" (myUsername, friendUsername) VALUES ('Destiny', 'Giacomo');
 INSERT INTO "friends" (myUsername, friendUsername) VALUES ('Lewis', 'Amethyst');
+INSERT INTO "friends" (myUsername, friendUsername) VALUES ('Lewis', 'Eaton');
+INSERT INTO "friends" (myUsername, friendUsername) VALUES ('Lewis', 'Leila');
+INSERT INTO "friends" (myUsername, friendUsername) VALUES ('Lewis', 'Celeste');
+INSERT INTO "friends" (myUsername, friendUsername) VALUES ('Lewis', 'Alexandra');
+INSERT INTO "friends" (myUsername, friendUsername) VALUES ('Lewis', 'Brynne');
+INSERT INTO "friends" (myUsername, friendUsername) VALUES ('Lewis', 'Rigel');
+INSERT INTO "friends" (myUsername, friendUsername) VALUES ('Lewis', 'Ishmael');
+INSERT INTO "friends" (myUsername, friendUsername) VALUES ('Lewis', 'Timon');
+INSERT INTO "friends" (myUsername, friendUsername) VALUES ('Lewis', 'Hanna');
+INSERT INTO "friends" (myUsername, friendUsername) VALUES ('Lewis', 'Kadeem');
 
 INSERT INTO "preferences" (username,prefCuisinetype,prefArea,prefBudget) VALUES ('Serena','Chinese','North',44);
 INSERT INTO "preferences" (username,prefCuisinetype,prefArea,prefBudget) VALUES ('Brody','Chinese','North',40);
