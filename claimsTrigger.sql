@@ -55,3 +55,30 @@ select * from userAccount where username = 'PointsTriggerTester5';
 INSERT INTO "customer" (username) VALUES ('PointsTriggerTester5');
 INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('PointsTriggerTester5','Holiday Giveaway','Hirame Sushi','Itacho Sushi','Tampines','2019-12-20','16:00');
 select * from userAccount where username = 'PointsTriggerTester5';
+
+
+CREATE OR REPLACE FUNCTION checkMaxTables() RETURNS TRIGGER AS
+	$$
+	DECLARE isValid BOOLEAN;
+	BEGIN
+		SELECT NEW.numTables <= r.maxTables FROM Restaurant r
+		WHERE r.RName = NEW.RName AND r.branchID = NEW.branchID
+		INTO isValid;
+		if (isValid = TRUE) THEN
+		RETURN NEW;
+		ELSE
+		RAISE NOTICE 'WARNING, You are allocating more tables than available'; 
+		RETURN NULL;
+		END IF;
+		RETURN NULL;
+	END; 
+	$$
+ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS trig5 ON public.availability;
+CREATE TRIGGER trig4
+BEFORE INSERT ON availability 
+FOR EACH ROW EXECUTE PROCEDURE checkMaxTables();
+
+
+ INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('High End West','Lakeside',0,'2019-12-10','11:00');
