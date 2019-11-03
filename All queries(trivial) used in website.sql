@@ -17,4 +17,3 @@ var new_query =  "SELECT * FROM restaurant r LEFT OUTER JOIN restaurantprofile p
 
 /*Insert or update a Restaurant's profile*/
 insert_query = "INSERT INTO RestaurantProfile VALUES ('" + rname + "','" + location + "', '" + c + "', '" + a + "') ON CONFLICT (rname,branchid) DO UPDATE SET CuisineType='" + c + "', area='" + a + "'";
-

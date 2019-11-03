@@ -1,3 +1,4 @@
+/*Trigger to check if the respective claim is within the window period*/
 CREATE OR REPLACE FUNCTION checkValid(offer varchar(50), restaurant varchar(100), myBranchId varchar(100), checkClaimDate date)
 	RETURNS BOOLEAN AS
 	$$ 
@@ -24,7 +25,7 @@ BEFORE INSERT ON claims
 FOR EACH ROW WHEN  (checkValid(NEW.OName, NEW.RName, NEW.branchID, NEW.claimDate))
 EXECUTE PROCEDURE checkClaim();
 
-
+/*Trigger to check if user has enough points for the claim and updates points accordingly*/
 CREATE OR REPLACE FUNCTION updateUser() RETURNS TRIGGER AS
 	$$
 	DECLARE isValid BOOLEAN;
@@ -49,6 +50,8 @@ CREATE TRIGGER trig4
 BEFORE INSERT ON claims 
 FOR EACH ROW EXECUTE PROCEDURE updateUser();
 
+
+/*trigger to check if more tables are made available then max tables of the restaurant*/
 CREATE OR REPLACE FUNCTION checkMaxTables() RETURNS TRIGGER AS
 	$$
 	DECLARE isValid BOOLEAN;
@@ -72,42 +75,37 @@ CREATE TRIGGER trig4
 BEFORE INSERT ON availability 
 FOR EACH ROW EXECUTE PROCEDURE checkMaxTables();
 
-CREATE OR REPLACE FUNCTION getCurrTables(myRName varchar(100), myBranchID varchar(100), myReserveDate date, myReserveTime time)
-	RETURNS integer AS
-	$$ 
-	DECLARE 
-		currtables integer;
+/*Trigger to award the user points when ever they rate a restaurant*/
+CREATE OR REPLACE FUNCTION awardUserPoints() RETURNS TRIGGER AS
+	$$
 	BEGIN
-	WITH reservedTablesCount(RName, branchID, totalreserved, reserveDate, reserveTime) AS 
-		(SELECT R.Rname, R.branchID, SUM(R.numTables) AS totalreserved, R.reserveDate, R.reserveTime
-		FROM Reservation R
-		WHERE R.reserveDate = myReserveDate 
-		AND R.reserveTime = myReserveTime
-		GROUP BY R.Rname, R.branchID, R.reserveDate, R.reserveTime)
-	SELECT A.numTables - R.totalreserved
-	INTO currtables -- set variable
-	FROM Availability A 
-	FULL JOIN reservedTablesCount R
-	ON A.RName = R.RName 
-	AND A.branchID = R.branchID
-	WHERE A.Rname = myRName 
-	AND A.branchID = myBranchID; -- rName and branchID can be specified
-	RETURN currtables;
+		IF (NEW.confirmation = true) THEN
+		UPDATE userAccount SET awardPoints = awardPoints + 10 WHERE userAccount.username = NEW.username;
+		RAISE NOTICE 'User awarded 10 points!';
+		ELSE
+		RAISE NOTICE 'User Visit not confirmed.';
+		RETURN NEW;
+		END IF;
+		RETURN NEW;
 	END; 
-	$$ LANGUAGE plpgsql;
-		
-CREATE OR REPLACE FUNCTION checkReservation()
-RETURNS TRIGGER AS $$ BEGIN
-RAISE NOTICE 'Sorry! Restaurant is over-booked at this timing.'; 
-RETURN NULL;
-END; $$ LANGUAGE plpgsql;
-	
-DROP TRIGGER IF EXISTS trig1 ON public.reservation;
-CREATE TRIGGER trig1
-BEFORE INSERT ON Reservation
-FOR EACH ROW WHEN (NEW.numtables > getCurrTables(NEW.rname,NEW.branchID, NEW.reserveDate, NEW.reserveTime))
-EXECUTE PROCEDURE checkReservation();
+	$$
+ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS awardUserPointsTrigger ON public.RateVisit;
+CREATE TRIGGER awardUserPointsTrigger
+AFTER INSERT ON RateVisit 
+FOR EACH ROW
+EXECUTE PROCEDURE awardUserPoints();
 
+/*
+INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Kadeem','High End West','Lakeside',8,'2019-12-02','11:00');
+INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Ignacia','Astons','Clementi',2,'2019-11-16','14:00');
 
+Select * from userAccount where username = 'Kadeem' OR username = 'Ignacia';
 
+INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Ignacia','Astons','Clementi','2019-11-16','14:00',null,false);
+INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Kadeem','High End West','Lakeside','2019-12-02','11:00',3,true);
+
+Select * from userAccount where username = 'Kadeem' OR username = 'Ignacia';
+
+Delete from rateVisit where username = 'Kadeem' OR username = 'Ignacia';*/
