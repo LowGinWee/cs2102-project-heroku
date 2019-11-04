@@ -112,6 +112,7 @@ CREATE TABLE RateVisit (
 	confirmation boolean DEFAULT true, -- implement some sort of confirmation?
 	PRIMARY KEY (username, RName, branchID, reserveDate, reserveTime),
 	FOREIGN KEY (username, RName, branchID, reserveDate, reserveTime) REFERENCES Reservation(username, RName, branchID, reserveDate, reserveTime),
+	FOREIGN KEY (RName, branchID) REFERENCES RestaurantProfile(RName, branchID),
 	CHECK(rating <= 5 
 	AND rating >=0
 	AND (confirmation = true OR rating IS NULL))
