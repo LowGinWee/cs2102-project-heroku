@@ -56,7 +56,7 @@ CREATE TABLE preferences ( 		-- Weak entity
 CREATE TABLE Restaurant (
 	RName varchar(100),
 	branchID varchar(100),
-	maxTables integer,
+	maxTables integer NOT NULL,
 	OpeningHours varchar(20) NOT NULL, 
 	AdminID VARCHAR(50) NOT NULL REFERENCES Admin(username), -- Account manager
 	primary key (rname, branchID)
@@ -83,7 +83,7 @@ CREATE TABLE Favourites (
 CREATE TABLE Availability (
 	RName varchar(100),
 	branchID varchar(100),
-	numTables integer,
+	numTables integer NOT NULL,
 	reserveDate date NOT NULL,
 	reserveTime time NOT NULL,
 	PRIMARY KEY (RName, branchID, reserveDate, reserveTime),
