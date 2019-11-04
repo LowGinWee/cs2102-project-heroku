@@ -104,7 +104,7 @@ INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserve
 Select * from userAccount where username = 'Kadeem' OR username = 'Ignacia';
 
 INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Ignacia','Astons','Clementi','2019-11-16','14:00',null,false);
-INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Kadeem','High End West','Lakeside','2019-12-02','11:00',3,true);
+INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Kadeem','High End West','Lakeside','2019-12-02','11:00',0,true);
 
 Select * from userAccount where username = 'Kadeem' OR username = 'Ignacia';
 
