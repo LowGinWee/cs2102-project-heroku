@@ -14,7 +14,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   </head>
   <body>
-    <h1>Restaurant OFFers</h1>
+    <h1>Restaurant Offers</h1>
 
 	<table class="table">
 		<thead>
@@ -36,8 +36,8 @@
 					<td><%= userData[i].branchid%></td>
 					<td><%= userData[i].course%></td>
 					<td><%= userData[i].price%></td>
-					<td><%= userData[i].startdate%></td>
-					<td><%= userData[i].enddate%></td>
+					<td><%= (userData[i].startdate.toLocaleString('default', { month: 'long' })) + " " + userData[i].startdate.getDate() + " " + (parseInt(userData[i].startdate.getYear()) + 1900) %></td>
+					<td><%= (userData[i].enddate.toLocaleString('default', { month: 'long' })) + " " + userData[i].enddate.getDate() + " " + (parseInt(userData[i].enddate.getYear()) + 1900) %></td>
 			</tr>
 			<% } %>
 		</tbody>
