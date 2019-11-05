@@ -263,6 +263,8 @@ CREATE OR REPLACE FUNCTION getCurrTables(myRName varchar(100), myBranchID varcha
 	$$ 
 	DECLARE 
 		currtables integer;
+		maxTables integer;
+
 	BEGIN
 	WITH reservedTablesCount(RName, branchID, totalreserved, reserveDate, reserveTime) AS 
 		(SELECT R.Rname, R.branchID, 
@@ -272,15 +274,15 @@ CREATE OR REPLACE FUNCTION getCurrTables(myRName varchar(100), myBranchID varcha
 		WHERE R.reserveDate = myReserveDate 
 		AND R.reserveTime = myReserveTime
 		GROUP BY R.Rname, R.branchID, R.reserveDate, R.reserveTime)
-	SELECT A.numTables - R.totalreserved
-	INTO currtables -- set variable
+	SELECT A.numTables - R.totalreserved, A.numTables
+	INTO currtables, maxTables -- set variable
 	FROM Availability A 
-	FULL JOIN reservedTablesCount R
+	LEFT OUTER JOIN reservedTablesCount R
 	ON A.RName = R.RName 
 	AND A.branchID = R.branchID
 	WHERE A.Rname = myRName 
 	AND A.branchID = myBranchID; -- rName and branchID can be specified
-	if (currtables IS NULL) THEN RETURN 0;
+	if (currtables IS NULL) THEN RETURN maxTables;
 	ELSE RETURN currtables;
 	END IF;
 	END; 
