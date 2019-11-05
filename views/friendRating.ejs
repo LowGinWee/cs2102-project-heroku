@@ -15,47 +15,38 @@
   </head>
   <body>
     <h1>Welcome <%= username%></h1>
-    <p>User Details</p>
+    <p>These are what your friends have been up to:</p>
 
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">Username</th>
-            <th scope="col">Email</th>
-            <th scope="col">Award Points</th>
+            <th scope="col">Restaurant</th>
+            <th scope="col">Branch</th>
+            <th scope="col">Your Rating</th>
+            <th scope="col">Your Friend's Ratings</th>
+            <th scope="col">Check Availability</th>
+
           </tr>
         </thead>
         <tbody>
+          <% for(var i=0; i<userData.length; i++) { %>
           <tr>
-            <td><%= username%></td>
-            <td><%= userData[0].email%></td>
-            <td><%= userData[0].awardpoints%></td>
+            <tr>
+              <td><%= userData[i].rname%></td>
+              <td><%= userData[i].branchid%></td>
+              <td><%= userData[i].mylatestrating%></td>
+              <td><%= userData[i].friendsavgrating%></td>
+              <td><a href= "<%= "/selectRestaurant/" +  userData[i].rname + "-" + userData[i].branchid%>/availability"</a>Check Availability</a></td>
+
+            </tr>
           </tr>
+          <% } %>
         </tbody>
+
       </table>
 
-      <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Favourite Cuisine</th>
-              <th scope="col">Favourite Location</th>
-              <th scope="col">Budget</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><%= userData[0].prefcuisinetype%></td>
-              <td><%= userData[0].prefarea%></td>
-              <td>$<%= userData[0].prefbudget%></td>
-            </tr>
-          </tbody>
-        </table>
         <a href="/updatepreference">update preferences</a><br/>
         <a href="/account/<%= username%>/friends">Friends</a><br/>
-        <a href="/account/<%= username%>/favourites">favourites</a><br/>
-        <a href="/account/<%= username%>/recommend">recommendatseions</a><br/>
-        <a href="/account/<%= username%>/friendrating">Friends Rating</a><br/>
-        <a href="/account/<%= username%>/reservation">reservation</a><br/>
   <a href="/">home</a><br/>
   <a href="/logout">Logout</a><br/>
 	

@@ -201,7 +201,7 @@ RAISE NOTICE 'Sorry. The Offer has not started or expired';
 RETURN NULL;
 END; $$ LANGUAGE plpgsql;
 	
-DROP TRIGGER IF EXISTS trig2 ON public.claims;
+DROP TRIGGER IF EXISTS trig2 ON claims;
 CREATE TRIGGER trig2
 BEFORE INSERT ON claims
 FOR EACH ROW WHEN  (checkValid(NEW.OName, NEW.RName, NEW.branchID, NEW.claimDate))
@@ -228,7 +228,7 @@ CREATE OR REPLACE FUNCTION updateUser() RETURNS TRIGGER AS
 	$$
  LANGUAGE plpgsql;
 
-DROP TRIGGER IF EXISTS trig4 ON public.claims;
+DROP TRIGGER IF EXISTS trig4 ON claims;
 CREATE TRIGGER trig4
 BEFORE INSERT ON claims 
 FOR EACH ROW EXECUTE PROCEDURE updateUser();
@@ -252,7 +252,7 @@ CREATE OR REPLACE FUNCTION checkMaxTables() RETURNS TRIGGER AS
 	$$
  LANGUAGE plpgsql;
 
-DROP TRIGGER IF EXISTS trig5 ON public.availability;
+DROP TRIGGER IF EXISTS trig5 ON availability;
 CREATE TRIGGER trig4
 BEFORE INSERT ON availability 
 FOR EACH ROW EXECUTE PROCEDURE checkMaxTables();
@@ -265,7 +265,9 @@ CREATE OR REPLACE FUNCTION getCurrTables(myRName varchar(100), myBranchID varcha
 		currtables integer;
 	BEGIN
 	WITH reservedTablesCount(RName, branchID, totalreserved, reserveDate, reserveTime) AS 
-		(SELECT R.Rname, R.branchID, SUM(R.numTables) AS totalreserved, R.reserveDate, R.reserveTime
+		(SELECT R.Rname, R.branchID, 
+		SUM(R.numTables) AS totalreserved 
+		, R.reserveDate, R.reserveTime
 		FROM Reservation R
 		WHERE R.reserveDate = myReserveDate 
 		AND R.reserveTime = myReserveTime
@@ -278,9 +280,13 @@ CREATE OR REPLACE FUNCTION getCurrTables(myRName varchar(100), myBranchID varcha
 	AND A.branchID = R.branchID
 	WHERE A.Rname = myRName 
 	AND A.branchID = myBranchID; -- rName and branchID can be specified
-	RETURN currtables;
+	if (currtables IS NULL) THEN RETURN 0;
+	ELSE RETURN currtables;
+	END IF;
 	END; 
 	$$ LANGUAGE plpgsql;
+
+--Select * from getCurrTables('Itacho Sushi','Jurong East','2019-11-28','10:00:00');
 		
 CREATE OR REPLACE FUNCTION checkReservation()
 RETURNS TRIGGER AS $$ BEGIN
@@ -288,7 +294,7 @@ RAISE NOTICE 'Sorry! Restaurant is over-booked at this timing.';
 RETURN NULL;
 END; $$ LANGUAGE plpgsql;
 	
-DROP TRIGGER IF EXISTS trig1 ON public.reservation;
+DROP TRIGGER IF EXISTS trig1 ON reservation;
 CREATE TRIGGER trig1
 BEFORE INSERT ON Reservation
 FOR EACH ROW WHEN (NEW.numtables > getCurrTables(NEW.rname,NEW.branchID, NEW.reserveDate, NEW.reserveTime))
@@ -310,8 +316,45 @@ CREATE OR REPLACE FUNCTION awardUserPoints() RETURNS TRIGGER AS
 	$$
  LANGUAGE plpgsql;
 
-DROP TRIGGER IF EXISTS awardUserPointsTrigger ON public.RateVisit;
+DROP TRIGGER IF EXISTS awardUserPointsTrigger ON RateVisit;
 CREATE TRIGGER awardUserPointsTrigger
 AFTER INSERT ON RateVisit 
 FOR EACH ROW
 EXECUTE PROCEDURE awardUserPoints();
+
+/*function for complex query for friends*/
+DROP FUNCTION friendratings(myName varchar(50));
+Create or REPLACE FUNCTION friendratings(myName varchar(50))
+RETURNS TABLE (rname varchar(50), branchid varchar(50), mylatestrating integer, friendsavgrating numeric) AS
+$$
+begin
+RETURN QUERY
+WITH X AS (
+	SELECT RV.rname, RV.branchid, ROUND(AVG(RV.rating),2) AS friendsAvgRating
+	FROM RateVisit RV, Friends F 
+	WHERE F.myusername = myName --*** VARIABLE ***
+	AND RV.username = F.friendusername -- conect friends ratings to uname
+	AND EXISTS (SELECT 1
+				FROM RateVisit RV2
+				WHERE RV2.username = F.myusername
+				AND RV2.rname = RV.rname
+				AND RV2.branchid = RV.branchid)
+	GROUP BY RV.rname, RV.branchid),
+Y AS ( -- myLatestRating for each restaurant
+	SELECT rankFilter.rname, rankFilter.branchid, rankFilter.rating FROM (
+		SELECT *,
+			rank() OVER (
+				PARTITION BY RV.rname, RV.branchid
+				ORDER BY RV.reservedate DESC, RV.reservetime DESC)
+		FROM RateVisit RV
+		WHERE RV.username = myName -- ***VARIABLE***
+		AND RV.rating IS NOT NULL
+	) rankFilter
+	WHERE RANK <=1)	
+SELECT Y.rname, Y.branchid, Y.rating, X.friendsAvgRating 
+FROM Y LEFT JOIN X -- in case of friendsAvgRating NULL
+ON Y.rname = X.rname
+AND Y.branchid = X.branchid;
+end;
+$$
+LANGUAGE plpgsql;
