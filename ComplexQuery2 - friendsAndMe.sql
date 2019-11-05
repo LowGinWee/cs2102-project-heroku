@@ -9,7 +9,7 @@ CREATE VIEW friendsAndMe (rname, branchid, myLatestRating, friendsAvgRating) AS
 WITH X AS (
 	SELECT RV.rname, RV.branchid, ROUND(AVG(RV.rating),2) AS friendsAvgRating
 	FROM RateVisit RV, Friends F 
-	WHERE F.myusername = 'Hall' --*** VARIABLE ***
+	WHERE F.myusername = 'Lewis' --*** VARIABLE ***
 	AND RV.username = F.friendusername -- conect friends ratings to uname
 	AND EXISTS (SELECT 1
 				FROM RateVisit RV2
@@ -24,7 +24,7 @@ Y AS ( -- myLatestRating for each restaurant
 				PARTITION BY rname, branchid
 				ORDER BY RV.reservedate DESC, RV.reservetime DESC)
 		FROM RateVisit RV
-		WHERE RV.username = 'Hall' -- ***VARIABLE***
+		WHERE RV.username = 'Lewis' -- ***VARIABLE***
 		AND RV.rating IS NOT NULL
 	) rankFilter
 	WHERE RANK <=1)	
@@ -32,7 +32,19 @@ SELECT Y.rname, Y.branchid, Y.rating, X.friendsAvgRating
 FROM Y LEFT JOIN X -- in case of friendsAvgRating NULL
 ON Y.rname = X.rname
 AND Y.branchid = X.branchid;
+
+--INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Lewis','Astons','Ang Mo Kio','2019-12-12','13:00',4,true);
 select * from friendsAndMe;
+
+INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Astons','Ang Mo Kio',80,'2019-12-15','13:00');
+INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Lewis','Astons','Ang Mo Kio',5,'2019-12-15','13:00');
+INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Lewis','Astons','Ang Mo Kio','2019-12-15','13:00',3,true);
+
+-- This will show latest rating, which is 3
+select * from friendsAndMe;
+
+
+
 
 /* Sub tables */
 
@@ -40,7 +52,7 @@ DROP VIEW IF EXISTS friendsAvgRatingsV; -- DONE Find friends average ratings in 
 CREATE VIEW friendsAvgRatingsV (rname, branchid, friendsAvgRating) AS
 	SELECT RV.rname, RV.branchid, ROUND(AVG(RV.rating),2) AS friendsAvgRating
 	FROM RateVisit RV, Friends F 
-	WHERE F.myusername = 'Hall' --*** VARIABLE ***
+	WHERE F.myusername = 'Lewis' --*** VARIABLE ***
 	AND RV.username = F.friendusername -- conect friends ratings to uname
 	AND EXISTS (SELECT 1
 				FROM RateVisit RV2
