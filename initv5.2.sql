@@ -55,7 +55,7 @@ CREATE TABLE preferences ( 	-- Weak entity
 	OR prefArea = 'South' 
 	OR prefArea = 'East' 
 	OR prefArea = 'West' 
-	OR prefArea = 'Central')
+	OR prefArea = 'Central'))
 );
 
 CREATE TABLE Restaurant (
@@ -74,7 +74,7 @@ CREATE TABLE RestaurantProfile (
 	CuisineType varchar(30) NOT NULL,
 	area varchar(50),
 	PRIMARY KEY (RName, branchID),
-	FOREIGN KEY (RName, branchID) REFERENCES Restaurant (RName, branchID) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY (RName, branchID) REFERENCES Restaurant (RName, branchID) ON DELETE CASCADE ON UPDATE CASCADE,
 	CHECK (area = 'North' 
 	OR area = 'South' 
 	OR area = 'East' 
@@ -152,7 +152,7 @@ CREATE TABLE OfferMenu ( -- Weak entity
 	startDate date NOT NULL,
 	endDate date NOT NULL,
 	PRIMARY KEY (OName, RName, branchID),
-	FOREIGN KEY (RName, branchID) REFERENCES Restaurant (RName, branchID) ON DELETE CASCADE ON UPDATE CASCADE 
+	FOREIGN KEY (RName, branchID) REFERENCES Restaurant (RName, branchID) ON DELETE CASCADE ON UPDATE CASCADE,
 	CHECK (endDate > startDate
 	AND price > 0
 	AND (course = 'Main'
