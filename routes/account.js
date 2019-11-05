@@ -11,7 +11,7 @@ const pool = new Pool({
 
 
 router.get('/', async function(req, res, next) {
-    var sql_query = "SELECT * FROM userAccount u LEFT OUTER JOIN preferences p ON (u.username = p.username) WHERE u.username = '";
+    var sql_query = "SELECT * FROM (userAccount u Left outer JOIN customer c ON u.username = c.username) LEFT OUTER JOIN preferences p ON (u.username = p.username) WHERE u.username = '";
     if(req.isAuthenticated()){
         await (req.user)
         var username = req.user.username
@@ -27,7 +27,7 @@ router.get('/', async function(req, res, next) {
   });
 
   router.get('/:user', async function(req, res, next) {
-    var sql_query = "SELECT * FROM userAccount u LEFT OUTER JOIN preferences p ON (u.username = p.username) WHERE u.username = '";
+    var sql_query = "SELECT * FROM (userAccount u Left outer JOIN customer c ON u.username = c.username) LEFT OUTER JOIN preferences p ON (u.username = p.username) WHERE u.username = '";
 
         var username = req.params.user
         sql_query = sql_query + username + "'";

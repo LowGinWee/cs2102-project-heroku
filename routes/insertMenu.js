@@ -48,7 +48,7 @@ router.post('/:rname-:location', async function(req, res, next) {
 		var t = a[i].split("-");
 		fname = t[0];
 		price = t[1];
-		insert_query += "INSERT INTO Menu (fname, rname, location, course, price) VALUES ('"+ fname + "','" + rname +"','" + location + "','" + course + "'," + price +");\n";
+		insert_query += "INSERT INTO Menu (fname, rname, branchid, course, price) VALUES ('"+ fname + "','" + rname +"','" + branchid + "','" + course + "'," + price +");\n";
 	}
 	console.log(insert_query);
 /* test data
@@ -93,7 +93,7 @@ router.post('/:rname-:location/delete', async function(req, res, next) {
 	var insert_query = "";
 
 	for (var i = 0; i < a.length; i++) {
-		insert_query += "DELETE FROM Menu WHERE fname = '"+ a[i] + "' AND  rname = '" + rname +"' AND location = '" + location + "';\n";
+		insert_query += "DELETE FROM Menu WHERE fname = '"+ a[i] + "' AND  rname = '" + rname +"' AND branchid = '" + location + "';\n";
 	}
 	console.log(insert_query);
 /* test data

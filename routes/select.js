@@ -10,7 +10,7 @@ const pool = new Pool({
 
 
 /* SQL Query */
-var sql_query = 'SELECT * FROM useraccount';
+var sql_query = 'SELECT u.username, u.email, u.password, c.awardpoints FROM useraccount u LEFT OUTER JOIN customer c on u.username = c.username';
 
 router.get('/', function(req, res, next) {
 	pool.query(sql_query, (err, data) => {
