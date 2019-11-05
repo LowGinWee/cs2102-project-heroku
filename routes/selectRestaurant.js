@@ -247,7 +247,7 @@ router.get('/book/:rname-:branchid-:year.:month.:day-:time', async function(req,
 router.get('/analyze/', async function(req, res, next) {
 
 	
-	var ana_query;
+	var ana_query = "select * from getpopularrestaurants()";
 
 	await pool.query(ana_query, (err, data) => {
 		if (err) {

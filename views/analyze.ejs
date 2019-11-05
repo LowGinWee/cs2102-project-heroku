@@ -2,7 +2,7 @@
 <html>
   <head>
 		<!-- Page Title -->
-    <title>CS2102 Select Restaurant</title>
+    <title>Analyze Restaurant</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 		
 		<!-- CSS for Styling -->
@@ -14,25 +14,30 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   </head>
   <body>
-    <h1>Analytics</h1>
+	<h1>Analytics</h1>
+	<h2>Top 3 Performing restaurants per day</h2>
 		<table class="table">
 			<thead>
 				<tr>
 					<th scope="col">Date</th>
+					<th scope="col">Rank per day</th>
 					<th scope="col">Restaurant</th>
 					<th scope="col">BranchID</th>
-					<th scope="col">Total Tables Booked</th>
+					<th scope="col">Tables Reserved</th>
 					<th scope="col">Total claims</th>
+					<th scope="col">Total Points Redeemed</th>
 				</tr>
 			</thead>
 			<tbody>
 				<% for(var i=0; i<userData.length; i++) { %>
 				<tr>
-                        <td><%= userData[i].rname%></td>
+						<td><%= (userData[i].day.toLocaleString('default', { month: 'long' })) + " " + userData[i].day.getDate() + " " + (parseInt(userData[i].day.getYear()) + 1900) %></td>
+						<td><%= userData[i].rank%></td>
+						<td><%= userData[i].rname%></td>
 						<td><%= userData[i].branchid%></td>
-						<td><%= userData[i].openinghours%></td>
-						<td><%= userData[i].adminid%></td>
-						<td><%= userData[i].adminid%></td>
+						<td><%= userData[i].totaltables%></td>
+						<td><%= userData[i].totalclaims%></td>
+						<td><%= userData[i].totalpoints%></td>
 				</tr>
 				<% } %>
 			</tbody>
