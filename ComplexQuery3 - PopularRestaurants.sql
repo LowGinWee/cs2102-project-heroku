@@ -30,6 +30,7 @@ WHERE RANK <= 3
 ORDER BY rankFilter.reserveDate;
 SELECT * FROM popularRestaurants;
 
+<<<<<<< HEAD
 
 DROP FUNCTION getPopularRestaurants();
 Create or REPLACE FUNCTION getPopularRestaurants()
@@ -64,6 +65,8 @@ $$
 LANGUAGE plpgsql;
 
 select * from getpopularrestaurants();
+=======
+>>>>>>> 3afc435e46cf181011cb6d80501a1952772df3f1
 --Subtables
 DROP VIEW IF EXISTS totalTablesRanking;
 CREATE VIEW totalTablesRanking (date, rname, branchID, totalTables) AS
