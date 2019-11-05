@@ -48,7 +48,7 @@ router.post('/:rname-:location', async function(req, res, next) {
 		var t = a[i].split("-");
 		fname = t[0];
 		price = t[1];
-		insert_query += "INSERT INTO Menu (fname, rname, branchid, course, price) VALUES ('"+ fname + "','" + rname +"','" + branchid + "','" + course + "'," + price +");\n";
+		insert_query += "INSERT INTO Menu (fname, rname, branchid, course, price) VALUES ('"+ fname + "','" + rname +"','" + location + "','" + course + "'," + price +");\n";
 	}
 	console.log(insert_query);
 /* test data

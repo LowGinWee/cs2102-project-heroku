@@ -47,7 +47,7 @@ router.get('/offers', function(req, res, next) {
 router.get('/:rname-:location', async function(req, res, next) {
 	var rname = req.params.rname;
 	var location = req.params.location;
-	var new_query =  "SELECT * FROM restaurant r LEFT OUTER JOIN restaurantprofile p ON (r.rname = p.rname)" + " WHERE r.rname = '" + rname + "'" + " AND r.branchid = '" + location + "'";
+	var new_query =  "SELECT * FROM restaurant r LEFT OUTER JOIN restaurantprofile p ON (r.rname = p.rname AND r.branchid = p.branchid)" + " WHERE r.rname = '" + rname + "'" + " AND r.branchid = '" + location + "'";
 	console.log(new_query);
 	var data1;
 
@@ -241,6 +241,21 @@ router.get('/book/:rname-:branchid-:year.:month.:day-:time', async function(req,
 	date = year +"-"+month+"-"+day;
 
 	res.render('book', {username : username, rname : rname, branchid:branchid, year:year, month:month, day:day, time:time})
+
+});
+
+router.get('/analyze/', async function(req, res, next) {
+
+	
+	var ana_query;
+
+	await pool.query(ana_query, (err, data) => {
+		if (err) {
+		}
+
+		res.render('analyze', {userData : data.rows})
+
+	});
 
 });
 

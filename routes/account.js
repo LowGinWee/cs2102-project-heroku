@@ -116,8 +116,31 @@ router.get('/:user/recommend', async function(req, res, next) {
     console.log(query);
     await pool.query(query, (err, data) => {
         res.render('favourites', { title: 'Favourites', username: user, userData : data.rows});
+
+        if (data == null) {
+            res.render('favourites', { title: 'favouritess', username: user, userData: data});
+        } else 
+        res.render('favourites', { title: 'favourites', username: user, userData: data.rows}); 
     
     });   
+
+  });
+
+  router.get('/favourites/:rname-:location', async function(req, res, next) {
+    var rname = req.params.rname;
+    var location = req.params.location;
+    if(!req.isAuthenticated()){
+        res.redirect('/login/');
+        return;
+    }
+    await (req.user)
+    var username = req.user.username
+    var query1 = "INSERT INTO favourites (username,RName,branchID) VALUES ('"+username+"','"+rname+"','"+location+"')";
+        console.log(query1);
+        pool.query(query1, (err, data) => {
+            res.redirect('/account/'+username+'/favourites');
+        });
+        
 
   });
 

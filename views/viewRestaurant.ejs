@@ -24,6 +24,8 @@
 				<th scope="col">Ratings</th>
 				<th scope="col">Opening Hours</th>
 				<th scope="col">Prices</th>
+			
+
 			</tr>
 		</thead>
 		<tbody>
@@ -34,6 +36,8 @@
 					<td>To compute ratings</td>
 					<td><%= userData[i].openinghours%></td>
 					<td>$To Compute average price</td>
+					<a href= "<%= "/account/favourites/" +  title + "-" + branchid%>/"> Add to Favourites</a><br/>
+
 			</tr>
 			<% } %>
 		</tbody>
