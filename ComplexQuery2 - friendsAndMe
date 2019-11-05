@@ -1,0 +1,66 @@
+/* 
+For all restaurants that a user had a reservation at AND gave a NON-NULL rating
+Compute average rating of all friends of the user who attended a reservation at the same restaurant,branch.
+Also compute latest rating of user at each restaurant the user had a reservation at.
+*/
+
+DROP VIEW IF EXISTS friendsAndMe;
+CREATE VIEW friendsAndMe (rname, branchid, myLatestRating, friendsAvgRating) AS
+WITH X AS (
+	SELECT RV.rname, RV.branchid, ROUND(AVG(RV.rating),2) AS friendsAvgRating
+	FROM RateVisit RV, Friends F 
+	WHERE F.myusername = 'Hall' --*** VARIABLE ***
+	AND RV.username = F.friendusername -- conect friends ratings to uname
+	AND EXISTS (SELECT 1
+				FROM RateVisit RV2
+				WHERE RV2.username = F.myusername
+				AND RV2.rname = RV.rname
+				AND RV2.branchid = RV.branchid)
+	GROUP BY RV.rname, RV.branchid),
+Y AS ( -- myLatestRating for each restaurant
+	SELECT rankFilter.rname, rankFilter.branchid, rankFilter.rating FROM (
+		SELECT *,
+			rank() OVER (
+				PARTITION BY rname, branchid
+				ORDER BY RV.reservedate DESC, RV.reservetime DESC)
+		FROM RateVisit RV
+		WHERE RV.username = 'Hall' -- ***VARIABLE***
+		AND RV.rating IS NOT NULL
+	) rankFilter
+	WHERE RANK <=1)	
+SELECT Y.rname, Y.branchid, Y.rating, X.friendsAvgRating 
+FROM Y LEFT JOIN X -- in case of friendsAvgRating NULL
+ON Y.rname = X.rname
+AND Y.branchid = X.branchid;
+select * from friendsAndMe;
+
+/* Sub tables */
+
+DROP VIEW IF EXISTS friendsAvgRatingsV; -- DONE Find friends average ratings in restaurants you been to (ONLY IF you have friends who been there before)
+CREATE VIEW friendsAvgRatingsV (rname, branchid, friendsAvgRating) AS
+	SELECT RV.rname, RV.branchid, ROUND(AVG(RV.rating),2) AS friendsAvgRating
+	FROM RateVisit RV, Friends F 
+	WHERE F.myusername = 'Hall' --*** VARIABLE ***
+	AND RV.username = F.friendusername -- conect friends ratings to uname
+	AND EXISTS (SELECT 1
+				FROM RateVisit RV2
+				WHERE RV2.username = F.myusername
+				AND RV2.rname = RV.rname
+				AND RV2.branchid = RV.branchid)
+	GROUP BY RV.rname, RV.branchid;
+SELECT * FROM friendsAvgRatingsV;
+-------------
+DROP VIEW IF EXISTS myLatestRatingV; -- DONE Find latest reservation's rating for all restaurants, even null
+CREATE VIEW myLatestRatingV (rname, branchid, myLatestRating) AS
+SELECT rankFilter.rname, rankFilter.branchid, rankFilter.rating FROM (
+	SELECT *,
+		rank() OVER (
+			PARTITION BY rname, branchid
+			ORDER BY RV.reservedate DESC, RV.reservetime DESC)
+	FROM RateVisit RV
+	WHERE RV.username = 'Hall' -- ***VARIABLE***
+	AND RV.rating IS NOT NULL
+) rankFilter
+WHERE RANK <=1;	
+SELECT * FROM myLatestRatingV;
+----------------------

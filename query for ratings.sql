@@ -1,5 +1,6 @@
 DROP FUNCTION getRatings2(myDate date, daysCount integer, orderBy varchar(50));
-Create or REPLACE FUNCTION getRatings2(myDate date, daysCount integer, orderBy varchar(50)) RETURNS TABLE (Rname varchar(50), BranchID varchar(50), Rating numeric, Dinners bigint) AS
+Create or REPLACE FUNCTION getRatings2(myDate date, daysCount integer, orderBy varchar(50)) 
+RETURNS TABLE (Rname varchar(50), BranchID varchar(50), Rating numeric, Dinners bigint) AS
 $$
 begin
 RETURN QUERY
