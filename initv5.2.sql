@@ -421,7 +421,7 @@ ON rankFilter.reserveDate = Y.claimDate
 AND rankFilter.RName = Y.RName
 AND rankFilter.branchID = Y.branchID
 WHERE rankFilter.RANK <= 3
-ORDER BY rankFilter.reserveDate;
+ORDER BY rankFilter.reserveDate, rankFilter.rank;
 end;
 $$
 LANGUAGE plpgsql;
