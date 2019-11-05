@@ -133,6 +133,18 @@ router.get('/:user/recommend', async function(req, res, next) {
     });   
   });
 
+  router.get('/:user/friendrating', async function(req, res, next) {
+    var user = req.params.user;
+    var query = "select * from friendratings('" + user +"')";
+    console.log(query);
+    await pool.query(query, (err, data) => {
+        if (data == null) {
+            res.render('friendRating', { title: 'Friends Ratings', username: user, userData: data});
+        } else 
+        res.render('friendRating', { title: 'Friends Ratings', username: user, userData: data.rows}); 
+    });   
+  });
+
   router.get('/:user/rate/:rname-:branchid-:year.:month.:day-:time', async function(req, res, next) {
     var user = req.params.user;
     var rname = req.params.rname;

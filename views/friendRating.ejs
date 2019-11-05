@@ -14,29 +14,40 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   </head>
   <body>
-    <h1>Friends of <%= username%></h1>
-      <table class="table">
-          <thead>
+    <h1>Welcome <%= username%></h1>
+    <p>These are what your friends have been up to:</p>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Restaurant</th>
+            <th scope="col">Branch</th>
+            <th scope="col">Your Rating</th>
+            <th scope="col">Your Friend's Ratings</th>
+            <th scope="col">Check Availability</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <% for(var i=0; i<userData.length; i++) { %>
+          <tr>
             <tr>
-              <th scope="col">Username</th>
-              <th scope="col">Favourite Cuisine</th>
-              <th scope="col">Favourite Location</th>
-              <th scope="col">Budget</th>
+              <td><%= userData[i].rname%></td>
+              <td><%= userData[i].branchid%></td>
+              <td><%= userData[i].mylatestrating%></td>
+              <td><%= userData[i].friendsavgrating%></td>
+              <td><a href= "<%= "/selectRestaurant/" +  userData[i].rname + "-" + userData[i].branchid%>/availability"</a>Check Availability</a></td>
+
             </tr>
-          </thead>
-          <tbody>
-              <% for(var i=0; i<userData.length; i++) { %>
-              <tr>
-                              <td><%= userData[i].friendusername%></td>
-                              <td><%= userData[i].prefcuisinetype%></td>
-                              <td><%= userData[i].prefarea%></td>
-                              <td>$<%= userData[i].prefbudget%></td>
-              </tr>
-              <% } %>
-            </tbody>
-        </table>
+          </tr>
+          <% } %>
+        </tbody>
+
+      </table>
+
+        <a href="/updatepreference">update preferences</a><br/>
+        <a href="/account/<%= username%>/friends">Friends</a><br/>
   <a href="/">home</a><br/>
-  <a href="/account/<%= username%>/addfriends">Friends</a><br/>
   <a href="/logout">Logout</a><br/>
 	
   </body>
