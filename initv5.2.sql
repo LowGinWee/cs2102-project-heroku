@@ -134,7 +134,7 @@ CREATE TABLE Menu (
 	RName varchar(100),
 	branchID varchar(100),
 	course varchar(30) NOT NULL,
-	price numeric(4,2) NOT NULL,
+	price numeric(10,2) NOT NULL,
 	PRIMARY KEY (FName, RName, branchID),
 	FOREIGN KEY (RName, branchID) REFERENCES Restaurant (RName, branchID) ON DELETE CASCADE ON UPDATE CASCADE,
 	CHECK(price > 0
@@ -148,7 +148,7 @@ CREATE TABLE OfferMenu (
 	RName varchar(100),
 	branchID varchar(100),
 	course varchar(30) NOT NULL,
-	price numeric(4,2) NOT NULL,
+	price numeric(10,2) NOT NULL,
 	startDate date NOT NULL,
 	endDate date NOT NULL,
 	PRIMARY KEY (OName, RName, branchID),
