@@ -24,6 +24,8 @@
             <th scope="col">Branch</th>
             <th scope="col">Ratings</th>
             <th scope="col">Average Price</th>
+            <th scope="col">Check Availability</th>
+
           </tr>
         </thead>
         <tbody>
@@ -32,8 +34,10 @@
             <tr>
               <td><%= userData[i].rname%></td>
               <td><%= userData[i].branchid%></td>
-              <td><%= userData[i].rating%></td>
+              <td><%= userData[i].avgrating%></td>
               <td><%= userData[i].avgprice%></td>
+              <td><a href= "<%= "/selectRestaurant/" +  userData[i].rname + "-" + userData[i].branchid%>/availability"</a>Check Availability</a></td>
+
             </tr>
           </tr>
           <% } %>
