@@ -47,7 +47,7 @@ router.get('/offers', function(req, res, next) {
 router.get('/:rname-:location', async function(req, res, next) {
 	var rname = req.params.rname;
 	var location = req.params.location;
-	var new_query =  "SELECT * FROM restaurant r LEFT OUTER JOIN restaurantprofile p ON (r.rname = p.rname AND r.branchid = p.branchid)" + " WHERE r.rname = '" + rname + "'" + " AND r.branchid = '" + location + "'";
+	var new_query =  "Select * from getRestProfile('"+rname+"','"+location+"')";
 	console.log(new_query);
 	var data1;
 
