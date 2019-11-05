@@ -2,7 +2,7 @@
 <html>
   <head>
 		<!-- Page Title -->
-    <title>Restaurant App</title>
+    <title>CS2102 Add Restaurant</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 		
 		<!-- CSS for Styling -->
@@ -12,13 +12,30 @@
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+		<!-- ADDED JavaScript -->
+		<script src="javascripts/insertRestaurantScript.js"></script>
   </head>
   <body>
-    <h1>Eat u GO</h1>
-    <p>Welcome to EAT u GO</p><br />		
-		<a href="/login">login</a><br/>
-		<a href="/insert">insert</a><br/>
-		<a href="/select">Accounts</a><br/>
-		<a href="/selectRestaurant">Restaurants</a><br/>
+	<h1><%= "Bookings @" + rname + "@" + branchid + " on " + year + " " + month + " " + day + " " + time %> </h1>
+	<h2><%= username %></h2>
+		<form id="html_form" action="<%= "/selectRestaurant/book/" + rname + "-" + branchid + "-" + year + "." + month+ "." + day +"-" + time%>"  method="post">
+			<div class="form-group">
+					<label for="numTables">Number of Tables</label>
+					<input type="number" class="form-control" id="numTables" name="numTables" placeholder="Enter number of tables to book">
+				</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+		
+		<script>
+			(function() {
+				window.addEventListener('load', function() {
+					var forms = [document.getElementById('html_form')];
+					var validation = Array.prototype.filter.call(forms, function(form) {
+						form.addEventListener('submit', check, false);
+					});
+				}, false);
+			})();
+		</script>
   </body>
 </html>

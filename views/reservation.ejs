@@ -32,8 +32,8 @@
                               <td><%= userData[i].rname%></td>
                               <td><%= userData[i].branchid%></td>
                               <td><%= userData[i].numtables%></td>
-                              <td><%= userData[i].reservedate%></td>
-                              <td>$<%= userData[i].reservetime%></td>
+                              <td><%= userData[i].reservedate.getDate() + " " + (userData[i].reservedate.toLocaleString('default', { month: 'long' })) %></td>
+                              <td><%= userData[i].reservetime%></td>
                               <td><a href= "<%= "/account/" + userData[i].username + "/rate/" + userData[i].rname + "-" + userData[i].branchid + "-" + userData[i].reservedate.getYear() + "." + userData[i].reservedate.getMonth() + "." + userData[i].reservedate.getDate() + "-" + userData[i].reservetime%>">Link</a></td>
               </tr>
               <% } %>

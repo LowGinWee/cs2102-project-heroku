@@ -124,8 +124,8 @@ router.get('/:rname-:location/edit', async function(req, res, next) {
 router.get('/:rname-:location/availability', async function(req, res, next) {
 	var rname = req.params.rname;
 	var location = req.params.location;
-	var drop = "DROP VIEW IF EXISTS availableCapacity; \n"
-	var avail_query = 	"CREATE VIEW availableCapacity(RName, branchID, capacityLeft, reserveDate, reserveTime) AS\n" + 
+	//var drop = "DROP VIEW IF EXISTS availableCapacity; \n"
+	var avail_query =    /*	"CREATE VIEW availableCapacity(RName, branchID, capacityLeft, reserveDate, reserveTime) AS\n" + */
 	"WITH reservedTablesCount(RName, branchID, totalreserved, reserveDate, reserveTime)\n" + 
 	"	AS\n" + 
 	"	(SELECT R.Rname, R.branchID, SUM(R.numTables) AS totalreserved, R.reserveDate, R.reserveTime\n" + 
@@ -141,29 +141,106 @@ router.get('/:rname-:location/availability', async function(req, res, next) {
 	"ON A.RName = R.RName AND A.branchID = R.branchID AND A.reserveDate = R.reserveDate AND A.reserveTime = R.reserveTime\n" + 
 	"WHERE A.Rname = '"+ rname+"' AND A.branchID = '"+ location+"'; -- rName and branchID can be specified\n";
 	
-	var q2 = "select * from availableCapacity;";
+	//var q2 = "select * from availableCapacity;";
 	
 	var new_query =  "SELECT * FROM availability WHERE rname = '" + rname + "'" + " AND branchid = '" + location + "'";
 
-	await pool.query(drop, (err, data) => {
-		//console.log(data);
-		setTimeout(function(){}, 1000);
+	// await pool.query(drop, (err, data) => {
+	// 	//console.log(data);
+	// 	setTimeout(function(){}, 1000);
+	// });
+
+	pool.query(avail_query, (err, data) => {
+		if(err){
+			//console.log(err);
+		} else {
+			//console.log(data);
+			res.render('viewRestaurantAvail', { title: rname , branchid: location, userData: data.rows})
+		}
 	});
 
-	await pool.query(avail_query, (err, data) => {
+	// await pool.query(avail_query, (err, data) => {
+	// 	if (err) {
+	// 	}
+	// 	setTimeout(function(){
+	// 		pool.query(q2, (err, data) => {
+	// 			if(err){
+	// 				//console.log(err);
+	// 			} else {
+	// 				//console.log(data);
+	// 				res.render('viewRestaurantAvail', { title: rname , branchid: location, userData: data.rows})
+	// 			}
+	// 		});
+	// 	}, 1000);
+	// });
+
+});
+
+router.get('/:rname-:location/reservation', async function(req, res, next) {
+	var rname = req.params.rname;
+	var location = req.params.location;
+	var a = req.body.area;
+	var c = req.body.cuisine;
+		// Construct Specific SQL Query
+		select_query = "Select * FROM Reservation WHERE rname = '" + rname + "' AND branchID = '" + location+ "'";
+		console.log(select_query);
+		pool.query(select_query, (err, data) => {
+			if (err){
+				console.log(err);
+			}
+			res.render('viewRestaurantReservation', { title: rname , branchid: location, userData: data.rows})
+		});
+});
+
+router.post('/book/:rname-:branchid-:year.:month.:day-:time', async function(req, res, next) {
+	if(!req.isAuthenticated()){
+		 res.redirect('/login/'); return;
+	}
+	await (req.user)
+	var username = req.user.username
+	var rname = req.params.rname;
+    var branchid = req.params.branchid;
+    var year = req.params.year;
+    var month = req.params.month;
+    var day = req.params.day;
+	var time = req.params.time;
+	var numTables = req.body.numTables;
+
+
+	date = year +"-"+month+"-"+day;
+	
+	book_query = "INSERT INTO reservation (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('"+username+"','"+rname+"','"+branchid+"',"+numTables+",'"+date+"','"+time+"')";
+	console.log(book_query);
+	await pool.query(book_query, (err, data) => {
 		if (err) {
 		}
-		setTimeout(function(){
-			pool.query(q2, (err, data) => {
-				if(err){
-					//console.log(err);
-				} else {
-					//console.log(data);
-					res.render('viewRestaurantAvail', { title: rname , branchid: location, userData: data.rows})
-				}
-			});
-		}, 1000);
+
+		res.redirect('/account/'+username+'/reservation');
+
 	});
+
+});
+
+router.get('/book/:rname-:branchid-:year.:month.:day-:time', async function(req, res, next) {
+	if(!req.isAuthenticated()){
+		res.redirect('/login/'); return;
+   }
+   await (req.user)
+	var username = req.user.username
+	var rname = req.params.rname;
+    var branchid = req.params.branchid;
+    var year = req.params.year;
+    var month = req.params.month;
+    var day = req.params.day;
+	var time = req.params.time;
+
+    month = parseInt(month) + 1;
+
+    year = parseInt(year) + 1900;
+
+	date = year +"-"+month+"-"+day;
+
+	res.render('book', {username : username, rname : rname, branchid:branchid, year:year, month:month, day:day, time:time})
 
 });
 

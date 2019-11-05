@@ -33,7 +33,7 @@
                         <td><%= userData[i].username%></td>
 						<td><%= userData[i].rname%></td>
 						<td><%= userData[i].branchid%></td>
-						<td><%= userData[i].reservedate%></td>
+						<td><%= userData[i].reservedate.getDate() + " " + (userData[i].reservedate.toLocaleString('default', { month: 'long' }))%></td>
 						<td><%= userData[i].reservetime%></td>
 						<td><%= userData[i].rating%></td>
 						<td><%= userData[i].confirmation%></td>

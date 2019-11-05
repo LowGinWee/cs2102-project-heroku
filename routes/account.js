@@ -78,9 +78,8 @@ router.get('/', async function(req, res, next) {
 
 router.get('/:user/recommend', async function(req, res, next) {
     var user = req.params.user;
-    var drop = "DROP VIEW IF EXISTS preferredRestaurants; \n"
-    var query =  "CREATE VIEW preferredRestaurants (RName, branchID, rating, avgPrice)  AS \n" +
-                "WITH X AS (SELECT RP.RName, RP.branchID, RP.cuisineType, RP.area, ROUND(AVG(M.price),2) as avgPrice \n" +
+    //var drop = "DROP VIEW IF EXISTS preferredRestaurants; \n"
+    var query =  "WITH X AS (SELECT RP.RName, RP.branchID, RP.cuisineType, RP.area, ROUND(AVG(M.price),2) as avgPrice \n" +
                     "FROM RestaurantProfile AS RP JOIN Menu AS M \n" +
                     "ON RP.RName = M.RName \n" +
                     "AND RP.branchID = M.branchID \n" +
@@ -99,18 +98,10 @@ router.get('/:user/recommend', async function(req, res, next) {
                 "AND Y.branchID = X.branchID \n" +
                 "ORDER BY Y.avgRating DESC, X.avgPrice ASC \n" +
                 "LIMIT 3; \n";    
-    var query2 = "SELECT * FROM preferredRestaurants; \n"
+    //var query2 = "SELECT * FROM preferredRestaurants; \n"
                 console.log(query);
-                
-                await pool.query(drop, (err, data) => {
-                    setTimeout(function(){},1000);
-                });
-                
-                await pool.query(query, (err, data) => {
-                    setTimeout(function(){},1000);
-                });
 
-                await pool.query(query2, (err, data) => {
+                await pool.query(query, (err, data) => {
                     if (data == null) {
                         res.render('recommend', { title: 'Recommendation', username: user, userData: data});
                     } else 
@@ -151,6 +142,8 @@ router.get('/:user/recommend', async function(req, res, next) {
     var day = req.params.day;
     var time = req.params.time;
 
+    month = parseInt(month) + 1;
+
     year = parseInt(year) + 1900;
 
     date = year +"-"+month+"-"+day;
@@ -173,6 +166,7 @@ router.get('/:user/recommend', async function(req, res, next) {
     var rating = req.body.rating;
 
 
+
     year = year +"-"+month+"-"+day;
 
     console.log(user+ "  " + rname+ " " + branchid+ " " +date + " " + time);
@@ -181,7 +175,7 @@ router.get('/:user/recommend', async function(req, res, next) {
     console.log(query);
 
     await pool.query(query, (err, data) => {
-        res.redirect('/selectRestaurant/ratings', { title: 'Ratings'}); 
+        res.redirect('/selectRestaurant/ratings'); 
     }); 
  
   });
