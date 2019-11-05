@@ -44,7 +44,7 @@ CREATE TABLE Friends (
 	CHECK (myUsername <> friendUsername)
 );
 
-CREATE TABLE preferences ( 	-- Weak entity
+CREATE TABLE preferences (
     username VARCHAR(50) PRIMARY KEY,
     prefCuisineType VARCHAR(50),
     prefArea VARCHAR(50),
@@ -63,7 +63,7 @@ CREATE TABLE Restaurant (
 	branchID varchar(100),
 	maxTables integer NOT NULL,
 	OpeningHours varchar(20) NOT NULL, 
-	AdminID VARCHAR(50) NOT NULL REFERENCES Admin(username), -- Account manager
+	AdminID VARCHAR(50) NOT NULL REFERENCES Admin(username),
 	PRIMARY KEY (rname, branchID),
 	CHECK (maxTables > 0)
 );
@@ -129,7 +129,7 @@ CREATE TABLE RateVisit (
 	AND (confirmation = true OR rating IS NULL))
 );
 
-CREATE TABLE Menu ( -- Weak entity
+CREATE TABLE Menu (
 	FName varchar(50),
 	RName varchar(100),
 	branchID varchar(100),
@@ -143,7 +143,7 @@ CREATE TABLE Menu ( -- Weak entity
 	OR course = 'Drinks'))
 );
 
-CREATE TABLE OfferMenu ( -- Weak entity
+CREATE TABLE OfferMenu (
 	OName varchar(50),
 	RName varchar(100),
 	branchID varchar(100),
@@ -167,7 +167,7 @@ CREATE TABLE Rewards (
 	CHECK(points > 0)
 );
 
-CREATE TABLE Claims ( -- Aggregate Claims against OfferMenu 
+CREATE TABLE Claims (
 	username varchar(50),
 	rewardName varchar(50),
 	OName varchar(50),
