@@ -25,7 +25,7 @@ SELECT * FROM restaurantFullProfile;
 
 DROP FUNCTION getRestProfile(myRname varchar(50), mybranchid varchar(50));
 Create or REPLACE FUNCTION getRestProfile(myRname varchar(50), mybranchid varchar(50))
-RETURNS TABLE (rname varchar(50), branchid varchar(50), maxtables integer, openinghours integer, adminid varchar(50), cuisinetype varchar(50), area varchar(50), averating numeric, avgprice numeric ) AS
+RETURNS TABLE (rname varchar(50), branchid varchar(50), maxtables integer, openinghours varchar(50), adminid varchar(50), cuisinetype varchar(50), area varchar(50), averating numeric, avgprice numeric ) AS
 $$
 begin
 RETURN QUERY
@@ -40,8 +40,8 @@ Y AS (SELECT RV.RName, RV.branchID, ROUND(AVG(RV.rating),1) as avgRating
 				GROUP BY RV.RName, RV.branchID)
 SELECT A.RName, A.branchID, A.maxtables, A.openinghours, A.adminID, A.cuisineType, A.area, y.avgRating, A.avgPrice FROM
 (SELECT X.RName, X.branchID, R2.maxtables, R2.openinghours, R2.adminID, RP2.cuisineType, RP2.area, X.avgPrice FROM X, RestaurantProfile RP2, Restaurant R2 
-WHERE R2.rname = 'Astons' -- **VARIABLE rname**
-AND R2.branchID = 'Ang Mo Kio'-- **VARIABLE branchid**
+WHERE R2.rname =  myRname -- **VARIABLE rname**
+AND R2.branchID = mybranchid-- **VARIABLE branchid**
 AND R2.rname = RP2.rname
 AND R2.branchID = RP2.branchID
 AND R2.rname = X.rname
@@ -50,6 +50,8 @@ AND A.branchID = Y.branchID);
 end;
 $$
 LANGUAGE plpgsql;
+
+Select * from getRestProfile('High End West','Lakeside');
 
 --Compute average Price
 DROP VIEW IF EXISTS computeAvgPrice;
