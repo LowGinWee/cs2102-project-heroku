@@ -129,7 +129,7 @@ INSERT INTO "preferences" (username,prefCuisinetype,prefArea,prefBudget) VALUES 
 INSERT INTO "preferences" (username,prefCuisinetype,prefArea,prefBudget) VALUES ('Dennis','Indonesian','Central',45);
 INSERT INTO "preferences" (username,prefCuisinetype,prefArea,prefBudget) VALUES ('Kadeem','Indonesian','Central',55);
 
-INSERT INTO "restaurant" (RName,branchID,maxTables,OpeningHours,adminID) VALUES ('Astons','Ang Mo Kio',43,'0900','Camille');
+INSERT INTO "restaurant" (RName,branchID,maxTables,OpeningHours,adminID) VALUES ('Astons','Ang Mo Kio',100,'0900','Camille');
 INSERT INTO "restaurant" (RName,branchID,maxTables,OpeningHours,adminID) VALUES ('Astons','Clementi',34,'0900','Dominique');
 INSERT INTO "restaurant" (RName,branchID,maxTables,OpeningHours,adminID) VALUES ('Itacho Sushi','Tampines',48,'0930','Dolan');
 INSERT INTO "restaurant" (RName,branchID,maxTables,OpeningHours,adminID) VALUES ('Itacho Sushi','Jurong East',44,'0930','Nora');
@@ -176,7 +176,7 @@ INSERT INTO "favourites" (username,RName,branchID) VALUES ('Hanna','Astons','Ang
 INSERT INTO "favourites" (username,RName,branchID) VALUES ('Dennis','Din Tai Fung','Marina Bay');
 INSERT INTO "favourites" (username,RName,branchID) VALUES ('Kadeem','Astons','Clementi');
 
-INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Astons','Ang Mo Kio',43,'2019-12-12','13:00');
+INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Astons','Ang Mo Kio',80,'2019-12-12','13:00');
 INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Astons','Clementi',34,'2019-11-16','14:00');
 INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Astons','Clementi',34,'2019-11-15','14:00');
 INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Astons','Clementi',34,'2019-11-13','14:00');
@@ -189,6 +189,17 @@ INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VA
 INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('High End West','Lakeside',15,'2019-12-02','11:00');
 
 INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Porter','Astons','Ang Mo Kio',2,'2019-12-12','13:00');
+INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Amethyst','Astons','Ang Mo Kio',4,'2019-12-12','13:00');
+INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Eaton','Astons','Ang Mo Kio',5,'2019-12-12','13:00');
+INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Leila','Astons','Ang Mo Kio',5,'2019-12-12','13:00');
+INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Celeste','Astons','Ang Mo Kio',3,'2019-12-12','13:00');
+INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Alexandra','Astons','Ang Mo Kio',8,'2019-12-12','13:00');
+INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Brynne','Astons','Ang Mo Kio',7,'2019-12-12','13:00');
+INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Rigel','Astons','Ang Mo Kio',6,'2019-12-12','13:00');
+INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Ishmael','Astons','Ang Mo Kio',7,'2019-12-12','13:00');
+INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Timon','Astons','Ang Mo Kio',5,'2019-12-12','13:00');
+INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Hanna','Astons','Ang Mo Kio',1,'2019-12-12','13:00');
+INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Kadeem','Astons','Ang Mo Kio',4,'2019-12-12','13:00');
 INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Brynne','Itacho Sushi','Tampines',1,'2019-11-29','15:00');
 INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Kirsten','Din Tai Fung','Marina Bay',4,'2019-12-02','11:00');
 INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Zachary','Din Tai Fung','Marina Bay',10,'2019-12-02','11:00');
@@ -205,6 +216,17 @@ INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserve
 INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Rigel','High End West','Lakeside',1,'2019-12-02','11:00');
 
 INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Porter','Astons','Ang Mo Kio','2019-12-12','13:00',4,true);
+INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Amethyst','Astons','Ang Mo Kio','2019-12-12','13:00',1,true);
+INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Eaton','Astons','Ang Mo Kio','2019-12-12','13:00',3,true);
+INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Leila','Astons','Ang Mo Kio','2019-12-12','13:00',5,true);
+INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Celeste','Astons','Ang Mo Kio','2019-12-12','13:00',2,true);
+INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Alexandra','Astons','Ang Mo Kio','2019-12-12','13:00',2,true);
+INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Brynne','Astons','Ang Mo Kio','2019-12-12','13:00',3,true);
+INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Rigel','Astons','Ang Mo Kio','2019-12-12','13:00',5,true);
+INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Ishmael','Astons','Ang Mo Kio','2019-12-12','13:00',5,true);
+INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Timon','Astons','Ang Mo Kio','2019-12-12','13:00',1,true);
+INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Hanna','Astons','Ang Mo Kio','2019-12-12','13:00',2,true);
+INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Kadeem','Astons','Ang Mo Kio','2019-12-12','13:00',3,true);
 INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Brynne','Itacho Sushi','Tampines','2019-11-29','15:00',3,true);
 INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Kirsten','Din Tai Fung','Marina Bay','2019-12-02','11:00',5,true);
 INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Zachary','Din Tai Fung','Marina Bay','2019-12-02','11:00',2,true);
@@ -252,7 +274,6 @@ INSERT INTO "rewards" (rewardName,points,type) VALUES ('Holiday Giveaway',40,'ho
 
 INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Celeste','30% off any purchase','Christmas Turkey','Astons','Ang Mo Kio','2019-12-16','14:00');
 INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Amethyst','Holiday Giveaway','Hirame Sushi','Itacho Sushi','Tampines','2019-12-20','16:00');
-
 
 INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Celeste','30% off any purchase','Christmas Turkey','Astons','Ang Mo Kio','2019-12-16','14:00');
 INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Amethyst','Holiday Giveaway','Hirame Sushi','Itacho Sushi','Tampines','2019-12-20','16:00');
