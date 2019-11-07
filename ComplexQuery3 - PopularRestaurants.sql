@@ -27,7 +27,7 @@ ON rankFilter.reserveDate = Y.claimDate
 AND rankFilter.RName = Y.RName
 AND rankFilter.branchID = Y.branchID
 WHERE RANK <= 3
-ORDER BY rankFilter.reserveDate;
+ORDER BY rankFilter.reserveDate, rankFilter.rank;
 SELECT * FROM popularRestaurants;
 
 
@@ -64,6 +64,10 @@ $$
 LANGUAGE plpgsql;
 
 select * from getpopularrestaurants();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8190aa5a7ab971d713e5986e0602e1030ff03450
 --Subtables
 DROP VIEW IF EXISTS totalTablesRanking;
 CREATE VIEW totalTablesRanking (date, rname, branchID, totalTables) AS

@@ -51,23 +51,23 @@ INSERT INTO "customer" (username,awardPoints) VALUES ('Celeste',92);
 INSERT INTO "customer" (username,awardPoints) VALUES ('Alexandra',86);
 INSERT INTO "customer" (username,awardPoints) VALUES ('Nasim',8);
 INSERT INTO "customer" (username,awardPoints) VALUES ('Brynne',14);
-INSERT INTO "customer" (username,awardPoints) VALUES ('Brent',79);
-INSERT INTO "customer" (username,awardPoints) VALUES ('Paki',35);
-INSERT INTO "customer" (username,awardPoints) VALUES ('Rigel',95);
-INSERT INTO "customer" (username,awardPoints) VALUES ('Kirsten',17);
+INSERT INTO "customer" (username,awardPoints) VALUES ('Brent',7978);
+INSERT INTO "customer" (username,awardPoints) VALUES ('Paki',3578);
+INSERT INTO "customer" (username,awardPoints) VALUES ('Rigel',9578);
+INSERT INTO "customer" (username,awardPoints) VALUES ('Kirsten',1778);
 INSERT INTO "customer" (username,awardPoints) VALUES ('Colby',71);
 INSERT INTO "customer" (username,awardPoints) VALUES ('Ishmael',66);
 INSERT INTO "customer" (username,awardPoints) VALUES ('Ignacia',68);
 INSERT INTO "customer" (username,awardPoints) VALUES ('Howard',51);
-INSERT INTO "customer" (username,awardPoints) VALUES ('Hall',5);
+INSERT INTO "customer" (username,awardPoints) VALUES ('Hall',55);
 INSERT INTO "customer" (username,awardPoints) VALUES ('Mason',30);
 INSERT INTO "customer" (username,awardPoints) VALUES ('Zachary',28);
 INSERT INTO "customer" (username,awardPoints) VALUES ('Melinda',17);
-INSERT INTO "customer" (username,awardPoints) VALUES ('Timon',33);
-INSERT INTO "customer" (username,awardPoints) VALUES ('Nadine',3);
-INSERT INTO "customer" (username,awardPoints) VALUES ('Amethyst',17);
-INSERT INTO "customer" (username,awardPoints) VALUES ('Giacomo',61);
-INSERT INTO "customer" (username,awardPoints) VALUES ('Hanna',21);
+INSERT INTO "customer" (username,awardPoints) VALUES ('Timon',3333);
+INSERT INTO "customer" (username,awardPoints) VALUES ('Nadine',3456);
+INSERT INTO "customer" (username,awardPoints) VALUES ('Amethyst',1712);
+INSERT INTO "customer" (username,awardPoints) VALUES ('Giacomo',6132);
+INSERT INTO "customer" (username,awardPoints) VALUES ('Hanna',2155);
 INSERT INTO "customer" (username,awardPoints) VALUES ('Dennis',25);
 INSERT INTO "customer" (username,awardPoints) VALUES ('Kadeem',83);
 
@@ -282,24 +282,43 @@ INSERT INTO "menu" (FName,RName,branchID,course,price) VALUES ('Mini Steak','Hig
 
 
 INSERT INTO "offermenu" (OName,RName,branchID,course,price,startDate,endDate) VALUES ('Christmas Turkey','Astons','Ang Mo Kio','Main',49.99,'2019-12-11','2019-12-31');
-INSERT INTO "offermenu" (OName,RName,branchID,course,price,startDate,endDate) VALUES ('Christmas Chicken','Astons','Clementi','Main',39.99,'2019-12-11','2019-12-31');
-INSERT INTO "offermenu" (OName,RName,branchID,course,price,startDate,endDate) VALUES ('Hirame Sushi','Itacho Sushi','Tampines','Main',4.99,'2019-12-15','2019-12-28');
-INSERT INTO "offermenu" (OName,RName,branchID,course,price,startDate,endDate) VALUES ('Shimesaba Sushi','Itacho Sushi','Jurong East','Main',5.99,'2019-12-15','2019-12-28');
+INSERT INTO "offermenu" (OName,RName,branchID,course,price,startDate,endDate) VALUES ('Christmas Chicken','Astons','Clementi','Main',39.99,'2019-11-11','2019-12-31');
+INSERT INTO "offermenu" (OName,RName,branchID,course,price,startDate,endDate) VALUES ('Winter Sashimi Set','Itacho Sushi','Tampines','Main',499.99,'2019-11-15','2019-12-30');
+INSERT INTO "offermenu" (OName,RName,branchID,course,price,startDate,endDate) VALUES ('Ikura Uni Flood','Itacho Sushi','Jurong East','Main',999.99,'2019-11-15','2019-12-30');
+INSERT INTO "offermenu" (OName,RName,branchID,course,price,startDate,endDate) VALUES ('Wagyu Whole Beef','High End West','Lakeside','Main',999.99,'2019-10-11','2019-12-31');
 
+INSERT INTO "rewards" (rewardName,points,type) VALUES ('HOHOHO',5,'holiday');
 INSERT INTO "rewards" (rewardName,points,type) VALUES ('30% off any purchase',20,'discount');
 INSERT INTO "rewards" (rewardName,points,type) VALUES ('Halloween Special',30,'holiday');
 INSERT INTO "rewards" (rewardName,points,type) VALUES ('Holiday Giveaway',40,'holiday');
+INSERT INTO "rewards" (rewardName,points,type) VALUES ('Payday',100,'holiday');
+INSERT INTO "rewards" (rewardName,points,type) VALUES ('Executive Suite',100,'holiday');
+INSERT INTO "rewards" (rewardName,points,type) VALUES ('ChaChing',400,'holiday');
 
 INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Celeste','30% off any purchase','Christmas Turkey','Astons','Ang Mo Kio','2019-12-16','14:00');
-INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Amethyst','Holiday Giveaway','Hirame Sushi','Itacho Sushi','Tampines','2019-12-20','16:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Amethyst','Holiday Giveaway','Winter Sashimi Set','Itacho Sushi','Tampines','2019-12-20','16:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Alexandra','30% off any purchase','Christmas Turkey','Astons','Ang Mo Kio','2019-08-10','14:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Alexandra','Holiday Giveaway','Winter Sashimi Set','Itacho Sushi','Tampines','2020-02-29','16:00');
 
-INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Alexandra','30% off any purchase','Christmas Turkey','Astons','Ang Mo Kio','2019-12-10','14:00');
-INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Alexandra','Holiday Giveaway','Hirame Sushi','Itacho Sushi','Tampines','2019-12-29','16:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Celeste','HOHOHO','Christmas Chicken','Astons','Clementi','2019-11-15','14:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Serena','Holiday Giveaway','Christmas Chicken','Astons','Clementi','2019-11-13','14:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Hanna','30% off any purchase','Christmas Chicken','Astons','Clementi','2019-11-13','14:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Colby','HOHOHO','Christmas Chicken','Astons','Clementi','2019-11-13','14:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Celeste','30% off any purchase','Christmas Chicken','Astons','Clementi','2019-11-14','14:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Timon','ChaChing','Wagyu Whole Beef','High End West','Lakeside','2019-12-02','11:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Nadine','ChaChing','Wagyu Whole Beef','High End West','Lakeside','2019-12-02','11:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Amethyst','ChaChing','Wagyu Whole Beef','High End West','Lakeside','2019-12-02','11:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Giacomo','ChaChing','Wagyu Whole Beef','High End West','Lakeside','2019-12-02','11:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Hanna','ChaChing','Wagyu Whole Beef','High End West','Lakeside','2019-12-02','11:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Brent','Payday','Winter Sashimi Set','Itacho Sushi','Tampines','2019-11-29','15:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Paki','Payday','Winter Sashimi Set','Itacho Sushi','Tampines','2019-11-29','15:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Rigel','Executive Suite','Ikura Uni Flood','Itacho Sushi','Jurong East','2019-11-28','10:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Kirsten','Executive Suite','Ikura Uni Flood','Itacho Sushi','Jurong East','2019-11-28','10:00');
 
 INSERT INTO "useraccount" (username,email,password) VALUES ('PointsTriggerTester','doesthiswork@gmail.com','123123');
 INSERT INTO "customer" (username, awardPoints) VALUES ('PointsTriggerTester',20);
-INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('PointsTriggerTester','Holiday Giveaway','Hirame Sushi','Itacho Sushi','Tampines','2019-12-20','16:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('PointsTriggerTester','Holiday Giveaway','Winter Sashimi Set','Itacho Sushi','Tampines','2019-12-20','16:00');
 
 INSERT INTO "useraccount" (username,email,password) VALUES ('PointsTriggerTester2','do2esthiswork@gmail.com','123123');
 INSERT INTO "customer" (username,awardPoints) VALUES ('PointsTriggerTester2',40);
-INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('PointsTriggerTester2','Holiday Giveaway','Hirame Sushi','Itacho Sushi','Tampines','2019-12-20','16:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('PointsTriggerTester2','Holiday Giveaway','Winter Sashimi Set','Itacho Sushi','Tampines','2019-12-20','16:00');
