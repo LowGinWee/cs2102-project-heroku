@@ -64,10 +64,7 @@ $$
 LANGUAGE plpgsql;
 
 select * from getpopularrestaurants();
-<<<<<<< HEAD
-=======
 
->>>>>>> 8190aa5a7ab971d713e5986e0602e1030ff03450
 --Subtables
 DROP VIEW IF EXISTS totalTablesRanking;
 CREATE VIEW totalTablesRanking (date, rname, branchID, totalTables) AS
