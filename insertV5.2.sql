@@ -322,6 +322,7 @@ INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTi
 INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Amethyst','Holiday Giveaway','Winter Sashimi Set','Itacho Sushi','Tampines','2019-12-20','16:00');
 INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Alexandra','30% off any purchase','Christmas Turkey','Astons','Ang Mo Kio','2019-08-10','14:00');
 INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Alexandra','Holiday Giveaway','Winter Sashimi Set','Itacho Sushi','Tampines','2020-02-29','16:00');
+INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Brody','Chaching','Winter Sashimi Set','Itacho Sushi','Tampines','2019-11-29','16:00');
 
 INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Celeste','HOHOHO','Christmas Chicken','Astons','Clementi','2019-11-15','14:00');
 INSERT INTO "claims" (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('Serena','Holiday Giveaway','Christmas Chicken','Astons','Clementi','2019-11-13','14:00');
