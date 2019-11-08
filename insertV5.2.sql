@@ -189,6 +189,7 @@ INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VA
 INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Astons','Clementi',34,'2019-11-14','14:00');
 INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Astons','Clementi',34,'2019-11-17','14:00');
 INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Astons','Clementi',34,'2019-11-12','14:00');
+INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Itacho Sushi','Tampines',999,'2019-11-29','15:00');
 INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Itacho Sushi','Tampines',48,'2019-11-29','15:00');
 INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Itacho Sushi','Jurong East',44,'2019-11-28','10:00');
 INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Din Tai Fung','Marina Bay',59,'2019-12-02','11:00');

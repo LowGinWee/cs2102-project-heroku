@@ -21,10 +21,10 @@ CREATE VIEW preferredRestaurants (RName, branchID, rating, avgPrice)  AS
 	SELECT X.RName, X.branchID, Y.avgRating, X.avgPrice
 	FROM X, Preferences AS P, Y
 	WHERE P.username = 'Hall' -- **USERNAME VARIABLE HERE**
-	AND P.prefArea = X.area -- get restaurants based on preferences
+	AND P.prefArea = X.area
 	AND P.prefCuisinetype = X.cuisineType
 	AND P.prefBudget >= X.avgPrice
-	AND Y.RName = X.RName -- join restaurants to their associated rating
+	AND Y.RName = X.RName
 	AND Y.branchID = X.branchID
 	ORDER BY Y.avgRating DESC, X.avgPrice ASC
 	LIMIT 3;

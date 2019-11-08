@@ -10,14 +10,14 @@ WITH X AS (
 	SELECT RV.rname, RV.branchid, ROUND(AVG(RV.rating),2) AS friendsAvgRating
 	FROM RateVisit RV, Friends F 
 	WHERE F.myusername = 'Lewis' --*** VARIABLE ***
-	AND RV.username = F.friendusername -- conect friends ratings to uname
+	AND RV.username = F.friendusername
 	AND EXISTS (SELECT 1
 				FROM RateVisit RV2
 				WHERE RV2.username = F.myusername
 				AND RV2.rname = RV.rname
 				AND RV2.branchid = RV.branchid)
 	GROUP BY RV.rname, RV.branchid),
-Y AS ( -- myLatestRating for each restaurant
+Y AS (
 	SELECT rankFilter.rname, rankFilter.branchid, rankFilter.rating FROM (
 		SELECT *,
 			rank() OVER (
@@ -29,7 +29,7 @@ Y AS ( -- myLatestRating for each restaurant
 	) rankFilter
 	WHERE RANK <=1)	
 SELECT Y.rname, Y.branchid, Y.rating, X.friendsAvgRating 
-FROM Y LEFT JOIN X -- in case of friendsAvgRating NULL
+FROM Y LEFT JOIN X
 ON Y.rname = X.rname
 AND Y.branchid = X.branchid;
 

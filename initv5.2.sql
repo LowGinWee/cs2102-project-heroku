@@ -287,8 +287,6 @@ CREATE OR REPLACE FUNCTION getCurrTables(myRName varchar(100), myBranchID varcha
 	END IF;
 	END; 
 	$$ LANGUAGE plpgsql;
-
---Select * from getCurrTables('Itacho Sushi','Jurong East','2019-11-28','10:00:00');
 		
 CREATE OR REPLACE FUNCTION checkReservation()
 RETURNS TRIGGER AS $$ BEGIN
