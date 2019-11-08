@@ -33,6 +33,15 @@ FROM Y LEFT JOIN X -- in case of friendsAvgRating NULL
 ON Y.rname = X.rname
 AND Y.branchid = X.branchid;
 
+select * from friendsAndMe;
+
+INSERT INTO "availability" (RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Astons','Ang Mo Kio',80,'2019-12-15','13:00');
+INSERT INTO "reservation" (username,RName,branchID,numTables,reserveDate,reserveTime) VALUES ('Lewis','Astons','Ang Mo Kio',5,'2019-12-15','13:00');
+INSERT INTO "ratevisit" (username,RName,branchID,reserveDate,reserveTime,rating, confirmation) VALUES ('Lewis','Astons','Ang Mo Kio','2019-12-15','13:00',3,true);
+
+-- This will show latest rating, which is 3
+select * from friendsAndMe;
+
 /*function version*/
 DROP FUNCTION friendratings(myName varchar(50));
 Create or REPLACE FUNCTION friendratings(myName varchar(50))
