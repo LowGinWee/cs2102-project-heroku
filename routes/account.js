@@ -168,7 +168,7 @@ router.get('/:user/recommend', async function(req, res, next) {
     });   
   });
 
-  router.get('/:user/rate/:rname-:branchid-:year.:month.:day-:time', async function(req, res, next) {
+  router.get('/:user-rate-:rname-:branchid-:year.:month.:day-:time', async function(req, res, next) {
     var user = req.params.user;
     var rname = req.params.rname;
     var branchid = req.params.branchid;
@@ -180,7 +180,7 @@ router.get('/:user/recommend', async function(req, res, next) {
     month = parseInt(month) + 1;
 
     year = parseInt(year) + 1900;
-    
+
 
     date = year +"-"+month+"-"+day;
 
@@ -191,7 +191,7 @@ router.get('/:user/recommend', async function(req, res, next) {
     res.render('rate', { title: 'Rate', username: user,  rname: rname, branchid: branchid, year: year, time: time}); 
   });
 
-  router.post('/:user/rate/:rname-:branchid-:year-:month-:day-:time', async function(req, res, next) {
+  router.post('/:user-rate-:rname-:branchid-:year-:month-:day-:time', async function(req, res, next) {
     var user = req.params.user;
     var rname = req.params.rname;
     var branchid = req.params.branchid;
