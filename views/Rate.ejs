@@ -18,7 +18,7 @@
   </head>
   <body>
     <h1><%= "Ratings for " + rname + "@" + branchid + " on " + date + " " + time %> </h1>
-		<form id="html_form" action="<%= "/account/" + username + "/rate/" + rname + "-" + branchid + "-" + date + "-" + time%>"  method="post">
+		<form id="html_form" action="<%= "/account/rate/" + username + "-" + rname + "-" + branchid + "-" + date + "-" + time%>"  method="post">
 			<div class="form-group">
 					<label for="rating">Rating</label>
 					<input type="number" class="form-control" id="rating" name="rating" placeholder="Enter rating">
