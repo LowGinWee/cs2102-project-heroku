@@ -24,6 +24,8 @@
               <th scope="col">Date</th>
               <th scope="col">Time</th>
               <th scope="col">Rate</th>
+              <th scope="col">Delete Reservation</th>
+
             </tr>
           </thead>
           <tbody>
@@ -34,8 +36,10 @@
                               <td><%= userData[i].numtables%></td>
                               <td><%= userData[i].reservedate.getDate() + " " + (userData[i].reservedate.toLocaleString('default', { month: 'long' })) %></td>
                               <td><%= userData[i].reservetime%></td>
-                              <td><a href= "<%= "/account/" + userData[i].username + "/rate/" + userData[i].rname + "-" + userData[i].branchid + "-" + userData[i].reservedate.getYear() + "." + userData[i].reservedate.getMonth() + "." + userData[i].reservedate.getDate() + "-" + userData[i].reservetime%>">Link</a></td>
-              </tr>
+                              <td><a href= "<%= "/account/" + userData[i].username + "/rate/" + userData[i].rname + "-" + userData[i].branchid + "-" + userData[i].reservedate.getYear() + "." + userData[i].reservedate.getMonth() + "." + userData[i].reservedate.getDate() + "-" + userData[i].reservetime%>">Rate</a></td>
+                              <td><a href= "<%= "/selectRestaurant/delete/" + userData[i].rname + "-" + userData[i].branchid + "-" + userData[i].reservedate.getYear() + "." + userData[i].reservedate.getMonth() + "." + userData[i].reservedate.getDate() + "-" + userData[i].reservetime%>">Delete</a></td>
+              
+                 </tr>
               <% } %>
             </tbody>
         </table>

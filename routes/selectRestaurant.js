@@ -244,6 +244,38 @@ router.get('/book/:rname-:branchid-:year.:month.:day-:time', async function(req,
 
 });
 
+
+router.get('/delete/:rname-:branchid-:year.:month.:day-:time', async function(req, res, next) {
+	if(!req.isAuthenticated()){
+		res.redirect('/login/'); return;
+   }
+   await (req.user)
+	var username = req.user.username
+	var rname = req.params.rname;
+    var branchid = req.params.branchid;
+    var year = req.params.year;
+    var month = req.params.month;
+    var day = req.params.day;
+	var time = req.params.time;
+
+    month = parseInt(month) + 1;
+
+    year = parseInt(year) + 1900;
+
+	date = year +"-"+month+"-"+day;
+
+	delete_query = "Delete from reservation WHERE username ='"+username+"' AND rname = '"+rname+"' AND branchID = '"+branchid+"' AND reserveDate = '"+date+"' AND reserveTime = '"+time+"'";
+	console.log(book_query);
+	await pool.query(delete_query, (err, data) => {
+		if (err) {
+		}
+
+		res.redirect('/account/'+username+'/reservation');
+
+	});
+
+});
+
 router.get('/analyze/', async function(req, res, next) {
 
 	
