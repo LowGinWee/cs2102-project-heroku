@@ -188,7 +188,7 @@ router.get('/:user/recommend', async function(req, res, next) {
 
 
 
-    res.render('rate', { title: 'Rate', username: user,  rname: rname, branchid: branchid, year: year, time: time}); 
+    res.render('Rate', { title: 'Rate', username: user,  rname: rname, branchid: branchid, year: year, time: time}); 
   });
 
   router.post('/rate/:user-:rname-:branchid-:year-:month-:day-:time', async function(req, res, next) {
