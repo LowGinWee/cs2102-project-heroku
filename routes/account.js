@@ -180,6 +180,7 @@ router.get('/:user/recommend', async function(req, res, next) {
     month = parseInt(month) + 1;
 
     year = parseInt(year) + 1900;
+    
 
     date = year +"-"+month+"-"+day;
 
