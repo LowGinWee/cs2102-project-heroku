@@ -25,7 +25,8 @@
 					<th scope="col">Course</th>
 					<th scope="col">Price</th>
 					<th scope="col">Start Date</th>
-					<th scope="col">End Date</th>					
+					<th scope="col">End Date</th>	
+					<th scope="col">Claim</th>					
 			</tr>
 		</thead>
 		<tbody>
@@ -38,7 +39,8 @@
 					<td><%= userData[i].price%></td>
 					<td><%= (userData[i].startdate.toLocaleString('default', { month: 'long' })) + " " + userData[i].startdate.getDate() + " " + (parseInt(userData[i].startdate.getYear()) + 1900) %></td>
 					<td><%= (userData[i].enddate.toLocaleString('default', { month: 'long' })) + " " + userData[i].enddate.getDate() + " " + (parseInt(userData[i].enddate.getYear()) + 1900) %></td>
-			</tr>
+					<td><a href= "<%= "/selectRestaurant/offers/claim/" + userData[i].oname + "-" + userData[i].rname + "-" + userData[i].branchid%>">Claim Now!</a></td>
+				</tr>
 			<% } %>
 		</tbody>
 	</table>

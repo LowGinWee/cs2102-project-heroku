@@ -190,6 +190,18 @@ router.get('/:user/recommend', async function(req, res, next) {
 
     res.render('Rate', { title: 'Rate', username: user,  rname: rname, branchid: branchid, year: year, time: time}); 
   });
+  router.get('/claims/:user', async function(req, res, next) {
+    var user = req.params.user;
+
+    var qq = "SELECT * FROM claims WHERE username = '"+user+"'";
+    console.log(qq);
+    await pool.query(qq, (err, data) => {
+        res.render('viewClaims', { title: 'Caims',username: user, userData : data.rows}); 
+
+    }); 
+
+
+  });
 
   router.post('/rate/:user-:rname-:branchid-:year-:month-:day-:time', async function(req, res, next) {
     var user = req.params.user;

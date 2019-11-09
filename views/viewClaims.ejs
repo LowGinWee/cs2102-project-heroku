@@ -15,48 +15,40 @@
   </head>
   <body>
     <h1>Welcome <%= username%></h1>
-    <p>User Details</p>
+    <p>Claim History:</p>
 
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">Username</th>
-            <th scope="col">Email</th>
-            <th scope="col">Award Points</th>
+            <th scope="col">Reward Name</th>
+            <th scope="col">Offer Item</th>
+            <th scope="col">Restaurant</th>
+            <th scope="col">BranchID</th>
+            <th scope="col">Claim Date</th>
+            <th scope="col">Claim Time</th>
+
           </tr>
         </thead>
         <tbody>
+          <% for(var i=0; i<userData.length; i++) { %>
           <tr>
-            <td><%= username%></td>
-            <td><%= userData[0].email%></td>
-            <td><%= userData[0].awardpoints%></td>
+            <tr>
+              <td><%= userData[i].rewardname%></td>
+              <td><%= userData[i].oname%></td>
+              <td><%= userData[i].rname%></td>
+              <td><%= userData[i].branchid%></td>
+              <td><%= userData[i].claimdate.getDate() + " " + (userData[i].claimdate.toLocaleString('default', { month: 'long' })) + " " +userData[i].claimdate.getFullYear();%></td>
+              <td><%= userData[i].claimtime%></td>
+           
+            </tr>
           </tr>
+          <% } %>
         </tbody>
+
       </table>
 
-      <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Favourite Cuisine</th>
-              <th scope="col">Favourite Location</th>
-              <th scope="col">Budget</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><%= userData[0].prefcuisinetype%></td>
-              <td><%= userData[0].prefarea%></td>
-              <td>$<%= userData[0].prefbudget%></td>
-            </tr>
-          </tbody>
-        </table>
-        <a href="/updatepreference">update preferences</a><br/>
+        <a href="/account">account</a><br/>
         <a href="/account/<%= username%>/friends">Friends</a><br/>
-        <a href="/account/<%= username%>/favourites">favourites</a><br/>
-        <a href="/account/<%= username%>/recommend">recommendatseions</a><br/>
-        <a href="/account/<%= username%>/friendrating">Friends Rating</a><br/>
-        <a href="/account/<%= username%>/reservation">reservation</a><br/>
-        <a href="/account/claims/<%= username%>/">Claims History</a><br/>
   <a href="/">home</a><br/>
   <a href="/logout">Logout</a><br/>
 	

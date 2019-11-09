@@ -36,13 +36,61 @@ router.get('/rewards', function(req, res, next) {
 
 router.get('/offers', function(req, res, next) {
 	var query = "Select * from offermenu"
-	pool.query(query, (query, data) => {
+	pool.query(query, (err, data) => {
 		res.render('viewRestaurantOffer', { title: 'Offers', userData: data.rows });
 	});
 });
 
+router.get('/offers/claim/:oname-:rname-:branchid', async function(req, res, next) {
+	var rname = req.params.rname;
+	var branchID = req.params.branchid;
+	var oname = req.params.oname;
+	if(!req.isAuthenticated()){
+		res.redirect('/login/'); return;
+   }
+   await (req.user)
+   var user = req.user.username
+	var get_points_query = "SELECT DISTINCT * FROM customer, rewards WHERE username = '"+user+"'";
+	pool.query(get_points_query, (err, data) => {
+		res.render('claiming', { title: 'Claiming', userData: data.rows, rname: rname, branchid : branchID, oname : oname });
+	});
+});
 
+router.post('/offers/claim/:oname-:rname-:branchid', async function(req, res, next) {
+	var rname = req.params.rname;
+	var branchID = req.params.branchid;
+	var oname = req.params.oname;
+	if(!req.isAuthenticated()){
+		res.redirect('/login/'); return;
+   }
+   await (req.user)
+   var user = req.user.username
+   var reward = req.body.rtier;
+   var currDate = new Date();
+   var month = currDate.getMonth();
+   var year = currDate.getFullYear();
+   var day = currDate.getDate();
 
+   month = parseInt(month) + 1;
+
+   year = parseInt(year);
+
+   date = year +"-"+month+"-"+day;
+   var time = currDate.getHours() + ":00:00";
+
+   console.log(date);	
+   console.log(reward);
+   console.log(time);
+	 var claim_q = "INSERT INTO claims (userName,rewardName,OName,RName,branchID,claimDate,claimTime) VALUES ('"+user+"','"+reward+"','"+oname+"','"+rname+"','"+branchID+"','"+date+"','"+time+"')";
+   	console.log(claim_q);
+	 pool.query(claim_q, (err, data) => {
+
+		
+//TODO add redirct
+res.redirect('/account/claims/' + user); 
+
+	 });
+});
 
 router.get('/:rname-:location', async function(req, res, next) {
 	var rname = req.params.rname;
@@ -290,5 +338,7 @@ router.get('/analyze/', async function(req, res, next) {
 	});
 
 });
+
+
 
 module.exports = router;
